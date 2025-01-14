@@ -1,13 +1,4 @@
 services:
-  web:
-    build: .
-    ports:
-      - "3000:3000"
-    environment:
-      - DATABASE_URL=mysql://user:password@db:3306/mydatabase
-    depends_on:
-      - db
-
   db:
     image: mysql
     restart: always
@@ -18,3 +9,7 @@ services:
       MYSQL_PASSWORD: password
     ports:
       - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+volumes:
+  db_data:
