@@ -3,7 +3,8 @@ import { notFound, } from 'next/navigation'
 import prisma from '../../../lib/prisma'
 import PostDetails from '../../../components/PostDetails'
 
-export default async function Post({ params }: { params: { id: string } }) {
+export default async function Post(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const id = Number(
     Array.isArray(params?.id)
       ? params?.id[0]
