@@ -1,9 +1,7 @@
 import React from "react";
-import { notFound } from "next/navigation";
-import prisma from "../../../../lib/prisma";
 
-export default async function ListEntry(props: {
-  params: Promise<{ racePrefix: string }>;
+export default async function Race(props: {
+  params: Promise<{ raceId: number }>;
 }) {
   const params = await props.params;
   // const id = Number(Array.isArray(params?.id) ? params?.id[0] : params?.id);
@@ -14,5 +12,5 @@ export default async function ListEntry(props: {
 
   // if (!post) notFound();
 
-  return <p>Prefix is {params.racePrefix}</p>;
+  return <p>RaceID is {params.raceId}</p>;
 }

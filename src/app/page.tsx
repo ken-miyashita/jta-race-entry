@@ -13,7 +13,7 @@ export default function Home() {
     <Container>
       <Paper elevation={3} sx={{ p: 5 }}>
         <h1>レース一覧（デバッグ用）</h1>
-        <Link href="/race/25SP">2025 Spring</Link>
+        <Link href="/race/1">2000 正月レガッタ</Link>
       </Paper>
     </Container>
   );
