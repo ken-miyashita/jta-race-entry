@@ -1,16 +1,24 @@
 import React from "react";
+import { notFound } from "next/navigation";
+import prisma from "../../../lib/prisma";
 
-export default async function Race(props: {
-  params: Promise<{ raceId: number }>;
-}) {
+type PageParams = {
+  raceId: number;
+};
+
+export default async function Race(props: { params: Promise<PageParams> }) {
   const params = await props.params;
-  // const id = Number(Array.isArray(params?.id) ? params?.id[0] : params?.id);
-  // const post = await prisma.post.findUnique({
-  //   where: { id },
-  //   include: { author: true },
-  // });
+  const raceId = Number(params.raceId);
 
-  // if (!post) notFound();
+  const race = await prisma.race.findUnique({
+    where: { id: raceId },
+  });
 
-  return <p>RaceID is {params.raceId}</p>;
+  if (!race) notFound();
+
+  return (
+    <div>
+      <h1>{race.name}</h1>
+    </div>
+  );
 }

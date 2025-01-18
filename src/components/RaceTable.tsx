@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from "next/navigation";
 import * as React from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -14,6 +15,11 @@ export type RaceTableProps = {
 };
 
 export default function RaceTable({ races }: RaceTableProps) {
+  const router = useRouter();
+  const handleClick = (raceId: number) => {
+    console.log(`Clicked raceId: ${raceId}`);
+    router.push(`/race/${raceId}`);
+  };
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -26,13 +32,7 @@ export default function RaceTable({ races }: RaceTableProps) {
         </TableHead>
         <TableBody>
           {races.map((race) => (
-            <TableRow
-              key={race.id}
-              hover
-              onClick={() => {
-                console.log("Clicked");
-              }}
-            >
+            <TableRow key={race.id} hover onClick={() => handleClick(race.id)}>
               <TableCell>{race.name}</TableCell>
               <TableCell>{race.dateOfRaceBegin.toDateString()}</TableCell>
               <TableCell>{race.dateOfRaceEnd.toDateString()}</TableCell>
