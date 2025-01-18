@@ -5,24 +5,53 @@ generator client {
 datasource db {
   provider = "mysql"
   url      = "mysql://user:password@127.0.0.1:3306/mydatabase"
-
 }
 
-model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
-  posts Post[]
+model Person {
+  id              Int     @id @default(autoincrement())
+  lastName        String
+  firstName       String
+  lastNameRomaji  String
+  firstNameRomaji String
+  team            Team @relation(fields: [teamId], references: [id])
+  teamId          Int
+  role            Int      // 0: スキッパー, 1: クルー１, 2: クルー２
+  jsafId          String?  // JSAF 会員か不問のとき、もしくは会員でない場合は null
+  jta             Boolean  // true: JTA会員である
+  birthDay        DateTime
+  sex             Boolean  // true: 男性、false: 女性
+  address         String
+  eMail           String
+  phone           String
+  fax             String?
+  miscInJson      String?  // その他、スキーマを変更しないで追加情報を覚えたいとき用
+  createdAt       DateTime  @default(now())
 }
 
-model Post {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  title     String
-  content   String?
-  published Boolean  @default(false)
-  viewCount Int      @default(0)
-  author    User?    @relation(fields: [authorId], references: [id])
-  authorId  Int?
+model Team {
+  id              Int      @id @default(autoincrement())
+  sailNumber      String
+  country         String　 // e.g. "JPN"
+  boatName        String?
+  boatWeight      Float    // 単位：キログラム
+  fleet           String?  // e.g. "葉山"
+  place           String?  // 通常の活動海域（フリート未所属の場合を想定）
+  message         String?  // 緊急連絡先など
+  persons         Person[]
+  race            Race @relation(fields: [raceId], references: [id])
+  raceId          Int
+  miscInJson      String?  // その他、スキーマを変更しないで追加情報を覚えたいとき用
+  createdAt       DateTime @default(now())
+}
+
+model Race {
+  id              Int      @id @default(autoincrement())
+  name            String  // e.g. "2025年度 テーザースプリングレガッタ"
+  mailFrom        String  // 通知メールの From 欄
+  mailBcc         String? // 通知メールの Bcc 欄
+  dateOfRaceBegin DateTime
+  dateOfRaceEnd   DateTime
+  teams           Team[]
+  miscInJson      String?  // その他、スキーマを変更しないで追加情報を覚えたいとき用
+  createdAt       DateTime @default(now())
 }

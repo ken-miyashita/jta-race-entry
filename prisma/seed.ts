@@ -1,70 +1,73 @@
-import { PrismaClient, Prisma } from '@prisma/client'
+import { PrismaClient, Prisma } from "@prisma/client";
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
-const userData: Prisma.UserCreateInput[] = [
+const raceData: Prisma.RaceCreateInput[] = [
   {
-    name: 'Alice',
-    email: 'alice@prisma.io',
-    posts: {
+    name: "2000年度 正月レガッタ",
+    mailFrom: "foo@example.com",
+    dateOfRaceBegin: new Date("2000-01-01T00:00:00Z"),
+    dateOfRaceEnd: new Date("2000-01-03T00:00:00Z"),
+    teams: {
       create: [
         {
-          title: 'Join the Prisma Discord',
-          content: 'https://pris.ly/discord',
-          published: true,
+          sailNumber: "2000",
+          country: "JPN",
+          boatName: "山田丸",
+          boatWeight: 60.0,
+          persons: {
+            create: [
+              {
+                lastName: "山田",
+                firstName: "太郎",
+                lastNameRomaji: "Yamada",
+                firstNameRomaji: "Taro",
+                role: 0,
+                jta: true,
+                birthDay: new Date("1970-01-01T00:00:00Z"),
+                sex: true,
+                address: "東京都港区",
+                eMail: "taro@example.com",
+                phone: "090-1234-5678",
+              },
+              {
+                lastName: "山田",
+                firstName: "花子",
+                lastNameRomaji: "Yamada",
+                firstNameRomaji: "Hanako",
+                role: 1,
+                jta: false,
+                birthDay: new Date("1970-01-01T00:00:00Z"),
+                sex: false,
+                address: "東京都港区",
+                eMail: "hanako@example.com",
+                phone: "090-1234-5678",
+              },
+            ],
+          },
         },
       ],
     },
   },
-  {
-    name: 'Nilu',
-    email: 'nilu@prisma.io',
-    posts: {
-      create: [
-        {
-          title: 'Follow Prisma on Twitter',
-          content: 'https://www.twitter.com/prisma',
-          published: true,
-        },
-      ],
-    },
-  },
-  {
-    name: 'Mahmoud',
-    email: 'mahmoud@prisma.io',
-    posts: {
-      create: [
-        {
-          title: 'Ask a question about Prisma on GitHub',
-          content: 'https://www.github.com/prisma/prisma/discussions',
-          published: true,
-        },
-        {
-          title: 'Prisma on YouTube',
-          content: 'https://pris.ly/youtube',
-        },
-      ],
-    },
-  },
-]
+];
 
 async function main() {
-  console.log(`Start seeding ...`)
-  for (const u of userData) {
-    const user = await prisma.user.create({
-      data: u,
-    })
-    console.log(`Created user with id: ${user.id}`)
+  console.log(`Start seeding ...`);
+  for (const r of raceData) {
+    const race = await prisma.race.create({
+      data: r,
+    });
+    console.log(`Created race with id: ${race.id}`);
   }
-  console.log(`Seeding finished.`)
+  console.log(`Seeding finished.`);
 }
 
 main()
   .then(async () => {
-    await prisma.$disconnect()
+    await prisma.$disconnect();
   })
   .catch(async (e) => {
-    console.error(e)
-    await prisma.$disconnect()
-    process.exit(1)
-  })
+    console.error(e);
+    await prisma.$disconnect();
+    process.exit(1);
+  });
