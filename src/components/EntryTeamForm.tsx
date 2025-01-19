@@ -13,23 +13,14 @@ import type { Race } from "@prisma/client";
 import { validateSailNumber } from "../lib/validate";
 import EntryPerson from "./EntryPerson";
 
+import type { EntryTeamFormData } from "../lib/types";
+import { sanitizeFormData } from "../lib/sanitize";
+
 export type EntryTeamFormProps = {
   raceId: number;
 };
 
 import "dayjs/locale/ja";
-
-interface EntryTeamFormData {
-  sailNumber: string;
-  country: string;
-  boatName?: string;
-  boatWeight: number;
-  fleet?: string;
-  place?: string;
-  message?: string;
-
-  // Person のデータは skipper_xxx, crew1_xxx, crew2_xxx という形式の属性で保持する
-}
 
 export default function EntryTeamForm({ raceId }: EntryTeamFormProps) {
   const router = useRouter();
@@ -45,9 +36,21 @@ export default function EntryTeamForm({ raceId }: EntryTeamFormProps) {
     },
   });
 
-  const onSubmit: SubmitHandler<EntryTeamFormData> = (data) =>
-    console.log(data);
+  const onSubmit: SubmitHandler<EntryTeamFormData> = async (formData) => {
+    try {
+      console.log(formData);
 
+      const sanitizedFormData = sanitizeFormData(formData);
+      const body = { raceId, ...sanitizedFormData };
+      await fetch(`/api/new_entry`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <div>
       <h2>エントリー入力</h2>
