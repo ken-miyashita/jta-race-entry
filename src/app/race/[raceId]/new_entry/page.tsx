@@ -1,7 +1,7 @@
 import React from "react";
 import { notFound } from "next/navigation";
 import prisma from "../../../../lib/prisma";
-import EntryForm from "../../../../components/EntryForm";
+import EntryTeamForm from "../../../../components/EntryTeamForm";
 
 type PageParams = {
   raceId: number;
@@ -21,7 +21,7 @@ export default async function NewEntry(props: { params: Promise<PageParams> }) {
   return (
     <div>
       <h1>{race.name}</h1>
-      <EntryForm raceId={raceId} />
+      <EntryTeamForm raceId={raceId} />
     </div>
   );
 }

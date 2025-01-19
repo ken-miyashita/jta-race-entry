@@ -1,22 +1,23 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useForm, Controller, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 
 import * as React from "react";
 import { Button, Stack } from "@mui/material";
 
-import TextField from "../components/TextField";
-import Select from "../components/Select";
+import TextField from "./TextField";
+import Select from "./Select";
 import { countries } from "../lib/country";
 
 import type { Race } from "@prisma/client";
 import { validateSailNumber } from "../lib/validate";
+import EntryPerson from "./EntryPerson";
 
-export type EntryFormProps = {
+export type EntryTeamFormProps = {
   raceId: number;
 };
 
-interface EntryFormData {
+interface EntryTeamFormData {
   sailNumber: string;
   country: string;
   boatName?: string;
@@ -24,22 +25,32 @@ interface EntryFormData {
   fleet?: string;
   place?: string;
   message?: string;
+
+  skipper_lastName: string;
+  skipper_firstName: string;
+
+  crew1_lastName: string;
+  crew1_firstName: string;
+
+  crew2_lastName?: string;
+  crew2_firstName?: string;
 }
 
-export default function EntryForm({ raceId }: EntryFormProps) {
+export default function EntryTeamForm({ raceId }: EntryTeamFormProps) {
   const router = useRouter();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<EntryFormData>({
+  } = useForm<EntryTeamFormData>({
     defaultValues: {
       country: "JPN",
     },
   });
 
-  const onSubmit: SubmitHandler<EntryFormData> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<EntryTeamFormData> = (data) =>
+    console.log(data);
 
   return (
     <div>
@@ -105,7 +116,24 @@ export default function EntryForm({ raceId }: EntryFormProps) {
           registerName="message"
           label="連絡事項"
         />
-
+        <EntryPerson
+          register={register}
+          errors={errors}
+          roleName="skipper"
+          required
+        />
+        <EntryPerson
+          register={register}
+          errors={errors}
+          roleName="crew1"
+          required
+        />
+        <EntryPerson
+          register={register}
+          errors={errors}
+          roleName="crew2"
+          required={false}
+        />
         <Button variant="contained" type="submit">
           登録
         </Button>
