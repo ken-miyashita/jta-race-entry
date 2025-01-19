@@ -21,6 +21,9 @@ interface EntryFormData {
   country: string;
   boatName?: string;
   boatWeight: number;
+  fleet?: string;
+  place?: string;
+  message?: string;
 }
 
 export default function EntryForm({ raceId }: EntryFormProps) {
@@ -62,11 +65,45 @@ export default function EntryForm({ raceId }: EntryFormProps) {
           register={register}
           errors={errors}
           registerName="country"
-          label="国"
+          label="国コード"
           options={Object.entries(countries).map(([value, label]) => ({
             value,
             label,
           }))}
+        />
+        <TextField
+          register={register}
+          errors={errors}
+          registerName="boatName"
+          label="艇名"
+        />
+        <TextField
+          register={register}
+          errors={errors}
+          registerName="boatWeight"
+          registerOptions={{
+            required: "ハル重量を入力してください",
+            valueAsNumber: true,
+          }}
+          label="ハル重量（キログラム）"
+        />
+        <TextField
+          register={register}
+          errors={errors}
+          registerName="fleet"
+          label="所属フリート"
+        />
+        <TextField
+          register={register}
+          errors={errors}
+          registerName="place"
+          label="活動海域"
+        />
+        <TextField
+          register={register}
+          errors={errors}
+          registerName="message"
+          label="連絡事項"
         />
 
         <Button variant="contained" type="submit">
