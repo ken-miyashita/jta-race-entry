@@ -6,8 +6,10 @@ const raceData: Prisma.RaceCreateInput[] = [
   {
     name: "2000年度 正月レガッタ",
     mailFrom: "foo@example.com",
-    dateOfRaceBegin: new Date("2000-01-01T00:00:00Z"),
-    dateOfRaceEnd: new Date("2000-01-03T00:00:00Z"),
+    mailBcc: "",
+    dateOfRaceBegin: new Date("2000-01-01"),
+    dateOfRaceEnd: new Date("2000-01-03"),
+    miscInJson: "",
     teams: {
       create: [
         {
@@ -15,6 +17,10 @@ const raceData: Prisma.RaceCreateInput[] = [
           country: "JPN",
           boatName: "山田丸",
           boatWeight: 60.0,
+          fleet: "葉山フリート",
+          place: "葉山",
+          message: "特になし",
+          miscInJson: "",
           persons: {
             create: [
               {
@@ -23,12 +29,15 @@ const raceData: Prisma.RaceCreateInput[] = [
                 lastNameRomaji: "Yamada",
                 firstNameRomaji: "Taro",
                 role: "skipper",
+                jsafId: "1-222-333",
                 jta: true,
-                birthDay: new Date("1970-01-01T00:00:00Z"),
+                birthDay: new Date("1970-01-01"),
                 sex: "male",
                 address: "東京都港区",
                 eMail: "taro@example.com",
                 phone: "090-1234-5678",
+                fax: "",
+                miscInJson: "",
               },
               {
                 lastName: "山田",
@@ -36,12 +45,15 @@ const raceData: Prisma.RaceCreateInput[] = [
                 lastNameRomaji: "Yamada",
                 firstNameRomaji: "Hanako",
                 role: "crew1",
+                jsafId: "",
                 jta: false,
-                birthDay: new Date("1970-01-01T00:00:00Z"),
+                birthDay: new Date("1970-01-01"),
                 sex: "female",
                 address: "東京都港区",
                 eMail: "hanako@example.com",
                 phone: "090-1234-5678",
+                fax: "",
+                miscInJson: "",
               },
             ],
           },

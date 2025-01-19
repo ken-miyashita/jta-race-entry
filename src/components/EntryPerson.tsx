@@ -85,6 +85,33 @@ export default function EntryPerson({
           { value: "female", label: "女性" },
         ]}
       />
+      <TextField
+        register={register}
+        errors={errors}
+        registerName={`${roleName}_address`}
+        registerOptions={required ? { required: "必須項目です" } : {}}
+        label="住所"
+      />
+      <TextField
+        register={register}
+        errors={errors}
+        registerName={`${roleName}_eMail`}
+        registerOptions={required ? { required: "必須項目です" } : {}}
+        label="メールアドレス"
+      />
+      <TextField
+        register={register}
+        errors={errors}
+        registerName={`${roleName}_phone`}
+        registerOptions={required ? { required: "必須項目です" } : {}}
+        label="電話番号"
+      />
+      <TextField
+        register={register}
+        errors={errors}
+        registerName={`${roleName}_fax`}
+        label="FAX"
+      />
     </Stack>
   );
 }

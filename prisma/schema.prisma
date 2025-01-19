@@ -16,15 +16,15 @@ model Person {
   team            Team @relation(fields: [teamId], references: [id])
   teamId          Int
   role            String   // "skipper" | "crew1" | "crew2"
-  jsafId          String?  // JSAF 会員か不問のとき、もしくは会員でない場合は null
+  jsafId          String   // JSAF 会員か不問のとき、もしくは会員でない場合は空文字列
   jta             Boolean  // true: JTA会員である
-  birthDay        DateTime
+  birthDay        DateTime?
   sex             String   // "male" | "female"
   address         String
   eMail           String
   phone           String
-  fax             String?
-  miscInJson      String?  // その他、スキーマを変更しないで追加情報を覚えたいとき用
+  fax             String
+  miscInJson      String   // その他、スキーマを変更しないで追加情報を覚えたいとき用
   createdAt       DateTime  @default(now())
 }
 
@@ -32,15 +32,15 @@ model Team {
   id              Int      @id @default(autoincrement())
   sailNumber      String
   country         String　 // e.g. "JPN"
-  boatName        String?
+  boatName        String
   boatWeight      Float    // 単位：キログラム
-  fleet           String?  // e.g. "葉山"
-  place           String?  // 通常の活動海域（フリート未所属の場合を想定）
-  message         String?  // 緊急連絡先など
+  fleet           String   // e.g. "葉山"
+  place           String   // 通常の活動海域（フリート未所属の場合を想定）
+  message         String   // 緊急連絡先など
   persons         Person[]
   race            Race @relation(fields: [raceId], references: [id])
   raceId          Int
-  miscInJson      String?  // その他、スキーマを変更しないで追加情報を覚えたいとき用
+  miscInJson      String   // その他、スキーマを変更しないで追加情報を覚えたいとき用
   createdAt       DateTime @default(now())
 }
 
@@ -48,10 +48,10 @@ model Race {
   id              Int      @id @default(autoincrement())
   name            String  // e.g. "2025年度 テーザースプリングレガッタ"
   mailFrom        String  // 通知メールの From 欄
-  mailBcc         String? // 通知メールの Bcc 欄
+  mailBcc         String  // 通知メールの Bcc 欄
   dateOfRaceBegin DateTime
   dateOfRaceEnd   DateTime
   teams           Team[]
-  miscInJson      String?  // その他、スキーマを変更しないで追加情報を覚えたいとき用
+  miscInJson      String   // その他、スキーマを変更しないで追加情報を覚えたいとき用
   createdAt       DateTime @default(now())
 }
