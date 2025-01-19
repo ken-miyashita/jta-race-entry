@@ -33,7 +33,7 @@ interface EntryTeamFormData {
 
   skipper_lastName: string;
   skipper_firstName: string;
-  skipper_birthDay: Dayjs;
+  skipper_birthDay: Dayjs; // Date でないので注意
 
   crew1_lastName: string;
   crew1_firstName: string;
@@ -48,8 +48,8 @@ export default function EntryTeamForm({ raceId }: EntryTeamFormProps) {
   const router = useRouter();
 
   const {
-    control,
     register,
+    control,
     handleSubmit,
     formState: { errors },
   } = useForm<EntryTeamFormData>({
@@ -74,23 +74,6 @@ export default function EntryTeamForm({ raceId }: EntryTeamFormProps) {
         spacing={2}
         sx={{ m: 2, width: "25ch" }}
       >
-        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ja">
-          <Controller
-            control={control}
-            name="skipper_birthDay"
-            render={({ field }) => {
-              return (
-                <DatePicker
-                  label="日付を選択"
-                  value={field.value}
-                  inputRef={field.ref}
-                  onChange={(date) => field.onChange(date)}
-                />
-              );
-            }}
-          />
-        </LocalizationProvider>
-
         <TextField
           register={register}
           errors={errors}
@@ -149,6 +132,7 @@ export default function EntryTeamForm({ raceId }: EntryTeamFormProps) {
         <EntryPerson
           register={register}
           errors={errors}
+          control={control}
           roleName="skipper"
           required
         />
@@ -156,6 +140,7 @@ export default function EntryTeamForm({ raceId }: EntryTeamFormProps) {
         <EntryPerson
           register={register}
           errors={errors}
+          control={control}
           roleName="crew1"
           required
         />
@@ -163,6 +148,7 @@ export default function EntryTeamForm({ raceId }: EntryTeamFormProps) {
         <EntryPerson
           register={register}
           errors={errors}
+          control={control}
           roleName="crew2"
           required={false}
         />

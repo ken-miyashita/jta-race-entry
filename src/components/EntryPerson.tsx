@@ -10,7 +10,7 @@ import DatePicker from "./DatePicker";
 interface EntryPersonProps {
   register: any; // react-hook-form の useForm() が返す register 関数
   errors: FieldErrors<FieldValues>; // react-hook-form の useForm() が返す errors
-
+  control: any; // react-hook-form の useForm() が返す control オブジェクト
   roleName: string; // 'skipper' | 'crew1' | 'crew2'
   required: boolean;
 }
@@ -18,6 +18,7 @@ interface EntryPersonProps {
 export default function EntryPerson({
   register,
   errors,
+  control,
   roleName,
   required,
 }: EntryPersonProps) {
@@ -68,19 +69,11 @@ export default function EntryPerson({
           { value: "no", label: "いいえ" },
         ]}
       />
-      {/* <DatePicker
-        register={register}
-        errors={errors}
+      <DatePicker
+        control={control}
         registerName={`${roleName}_birthDay`}
-        // registerOptions={{ valueAsDate: true }}
-        registerOptions={{
-          validate: (date: Date) => {
-            console.log("validate for date is called");
-            return true;
-          },
-        }}
         label="生年月日"
-      /> */}
+      />
     </Stack>
   );
 }
