@@ -4,6 +4,7 @@ import TextField from "./TextField";
 import Select from "./Select";
 
 import type { FieldErrors, FieldValues } from "react-hook-form";
+import { Stack } from "@mui/material";
 
 interface EntryPersonProps {
   register: any; // react-hook-form の useForm() が返す register 関数
@@ -20,8 +21,7 @@ export default function EntryPerson({
   required,
 }: EntryPersonProps) {
   return (
-    <div>
-      <h3>{roleName}</h3>
+    <Stack component="div" spacing={2} sx={{ m: 2, width: "25ch" }}>
       <TextField
         register={register}
         errors={errors}
@@ -36,6 +36,6 @@ export default function EntryPerson({
         registerOptions={required ? { required: "必須項目です" } : {}}
         label="名"
       />
-    </div>
+    </Stack>
   );
 }

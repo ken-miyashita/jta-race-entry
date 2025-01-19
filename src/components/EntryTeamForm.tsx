@@ -116,18 +116,21 @@ export default function EntryTeamForm({ raceId }: EntryTeamFormProps) {
           registerName="message"
           label="連絡事項"
         />
+        <h3>スキッパー</h3>
         <EntryPerson
           register={register}
           errors={errors}
           roleName="skipper"
           required
         />
+        <h3>クルー１</h3>
         <EntryPerson
           register={register}
           errors={errors}
           roleName="crew1"
           required
         />
+        <h3>クルー２（オプション）</h3>
         <EntryPerson
           register={register}
           errors={errors}
