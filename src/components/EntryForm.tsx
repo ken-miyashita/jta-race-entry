@@ -55,6 +55,8 @@ export default function EntryForm({ raceId }: EntryFormProps) {
   });
 
   const onSubmit: SubmitHandler<EntryFormData> = (data) => console.log(data);
+  /*
+  // こっちは動作する
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <input type="text" {...register("sailNumber", { required: true })} />
@@ -62,53 +64,21 @@ export default function EntryForm({ raceId }: EntryFormProps) {
       <input type="submit" />
     </form>
   );
-  /*
+  */
+
   return (
     <div>
       <h2>エントリー入力</h2>
-      <Stack
-        // component={}
-        // noValidate
-        // onSubmit={handleSubmit(onSubmit)}
-        spacing={2}
-        sx={{ m: 2, width: "25ch" }}
-      >
-        <Controller
-          name="sailNumber"
-          control={control}
-          rules={validationRules.sailNumber}
-          render={({ field }) => (
-            <TextField
-              {...field}
-              label="セール番号"
-              type="text"
-              error={errors.sailNumber !== undefined}
-              helperText={errors.sailNumber?.message}
-            />
-          )}
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <TextField
+          {...register("sailNumber", {
+            required: validationRules.sailNumber.required,
+            maxLength: validationRules.sailNumber.maxLength,
+          })}
+          label="セール番号"
         />
-        <Controller
-          name="country"
-          control={control}
-          rules={validationRules.country}
-          render={({ field }) => (
-            <Select
-              {...field}
-              native
-              label="国"
-              error={errors.country !== undefined}
-            >
-              <option value="JPN">日本</option>
-              <option value="USA">アメリカ</option>
-              <option value="AUS">オーストラリア</option>
-            </Select>
-          )}
-        />
-        <Button variant="contained" type="submit">
-          送信する
-        </Button>
-      </Stack>
+        <input type="submit" />
+      </form>
     </div>
   );
-  */
 }
