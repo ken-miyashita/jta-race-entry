@@ -11,7 +11,6 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Select from "@mui/material/Select";
-import TextField from "@mui/material/TextField";
 import {
   FormControl,
   InputLabel,
@@ -19,6 +18,8 @@ import {
   Stack,
   MenuItem,
 } from "@mui/material";
+
+import TextField from "../components/TextField";
 
 import type { Race } from "@prisma/client";
 
@@ -72,7 +73,7 @@ export default function EntryForm({ raceId }: EntryFormProps) {
         sx={{ m: 2, width: "25ch" }}
       >
         <TextField
-          {...register("sailNumber", {
+          propsByReactHookForm={register("sailNumber", {
             validate: (value) => {
               if (value.length !== 4) {
                 return "セール番号は4文字で入力してください";
@@ -81,8 +82,8 @@ export default function EntryForm({ raceId }: EntryFormProps) {
             },
           })}
           label="セール番号"
-          error={!!errors.sailNumber}
-          helperText={errors.sailNumber?.message}
+          attributeName="sailNumber"
+          errors={errors}
         />
 
         <FormControl sx={{ m: 1, minWidth: 120 }}>
