@@ -4,24 +4,26 @@ import MuiTextField from "@mui/material/TextField";
 import type { FieldErrors, FieldValues } from "react-hook-form";
 
 export type TextFieldProps = {
-  propsByReactHookForm: any;
-  label: string; // e.g. 'セール番号'
-  attributeName: string; // e.g. 'sailNumber'
+  register: any; // react-hook-form の useForm() が返す register 関数
   errors: FieldErrors<FieldValues>; // react-hook-form の useForm() が返す errors
+  registerName: string; // react-hook-form の useForm() が返す register 関数の引数 e.g. 'sailNumber'
+  registerOptions: any; // react-hook-form の useForm() が返す register 関数の引数
+  label: string; // e.g. 'セール番号'
 };
 
 export default function TextField({
-  propsByReactHookForm,
-  label,
-  attributeName,
+  register,
   errors,
+  registerName,
+  registerOptions,
+  label,
 }: TextFieldProps) {
   return (
     <MuiTextField
-      {...propsByReactHookForm}
+      {...register(registerName, registerOptions)}
       label={label}
-      error={!!errors[attributeName]}
-      helperText={errors[attributeName]?.message}
+      error={!!errors[registerName]}
+      helperText={errors[registerName]?.message}
     />
   );
 }

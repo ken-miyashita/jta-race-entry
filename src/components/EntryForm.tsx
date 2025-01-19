@@ -22,6 +22,7 @@ import {
 import TextField from "../components/TextField";
 
 import type { Race } from "@prisma/client";
+import { validateSailNumber } from "../lib/validate";
 
 export type EntryFormProps = {
   raceId: number;
@@ -73,17 +74,14 @@ export default function EntryForm({ raceId }: EntryFormProps) {
         sx={{ m: 2, width: "25ch" }}
       >
         <TextField
-          propsByReactHookForm={register("sailNumber", {
-            validate: (value) => {
-              if (value.length !== 4) {
-                return "セール番号は4文字で入力してください";
-              }
-              return true;
-            },
-          })}
-          label="セール番号"
-          attributeName="sailNumber"
+          register={register}
           errors={errors}
+          registerName="sailNumber"
+          registerOptions={{
+            required: "セール番号を入力してください",
+            validate: validateSailNumber,
+          }}
+          label="セール番号"
         />
 
         <FormControl sx={{ m: 1, minWidth: 120 }}>
