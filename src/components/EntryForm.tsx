@@ -3,23 +3,11 @@ import { useRouter } from "next/navigation";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 
 import * as React from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import Select from "@mui/material/Select";
-import {
-  FormControl,
-  InputLabel,
-  Button,
-  Stack,
-  MenuItem,
-} from "@mui/material";
+import { Button, Stack } from "@mui/material";
 
 import TextField from "../components/TextField";
+import Select from "../components/Select";
+import { countries } from "../lib/country";
 
 import type { Race } from "@prisma/client";
 import { validateSailNumber } from "../lib/validate";
@@ -30,23 +18,10 @@ export type EntryFormProps = {
 
 interface EntryFormData {
   sailNumber: string;
-  country: "JPN" | "USA" | "AUS";
+  country: string;
   boatName?: string;
   boatWeight: number;
 }
-
-// const validationRules = {
-//   sailNumber: {
-//     required: "セール番号を入力してください",
-//     maxLength: 4,
-//   },
-//   country: {
-//     required: "国を選択してください",
-//   },
-//   boatWeight: {
-//     required: "ボート重量を入力してください（キログラた単位）",
-//   },
-// };
 
 export default function EntryForm({ raceId }: EntryFormProps) {
   const router = useRouter();
@@ -83,20 +58,17 @@ export default function EntryForm({ raceId }: EntryFormProps) {
           }}
           label="セール番号"
         />
+        <Select
+          register={register}
+          errors={errors}
+          registerName="country"
+          label="国"
+          options={Object.entries(countries).map(([value, label]) => ({
+            value,
+            label,
+          }))}
+        />
 
-        <FormControl sx={{ m: 1, minWidth: 120 }}>
-          <InputLabel id="country-label">国</InputLabel>
-          <Select
-            {...register("country")}
-            native
-            label="国"
-            error={!!errors.country}
-          >
-            <option value="JPN">日本</option>
-            <option value="USA">アメリカ</option>
-            <option value="AUS">オーストラリア</option>
-          </Select>
-        </FormControl>
         <Button variant="contained" type="submit">
           登録
         </Button>
