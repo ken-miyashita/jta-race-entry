@@ -36,6 +36,36 @@ export default function EntryPerson({
         registerOptions={required ? { required: "必須項目です" } : {}}
         label="名"
       />
+      <TextField
+        register={register}
+        errors={errors}
+        registerName={`${roleName}_lastNameRomaji`}
+        registerOptions={required ? { required: "必須項目です" } : {}}
+        label="姓（ローマ字）"
+      />
+      <TextField
+        register={register}
+        errors={errors}
+        registerName={`${roleName}_firstNameRomaji`}
+        registerOptions={required ? { required: "必須項目です" } : {}}
+        label="名（ローマ字）"
+      />
+      <TextField
+        register={register}
+        errors={errors}
+        registerName={`${roleName}_jsafId`}
+        label="JSAF ID"
+      />
+      <Select
+        register={register}
+        errors={errors}
+        registerName={`${roleName}_jta`}
+        label="JTA 会員"
+        options={[
+          { value: "true", label: "はい" },
+          { value: "false", label: "いいえ" },
+        ]}
+      />
     </Stack>
   );
 }
