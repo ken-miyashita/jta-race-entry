@@ -9,11 +9,9 @@ export default async function handle(
   res: NextApiResponse
 ) {
   const { raceId, ...formData } = req.body;
-  console.log(raceId);
-  console.log(formData);
-
+  const extractedTeam = extractTeamFromFormData(formData, raceId);
   const result = await prisma.team.create({
-    data: extractTeamFromFormData(formData, raceId),
+    data: extractedTeam,
   });
   return res.status(201).json(result);
 }
@@ -30,7 +28,7 @@ function extractTeamFromFormData(
     fleet: formData.fleet,
     place: formData.place,
     message: formData.message,
-    miscInJson: formData.miscInJson,
+    miscInJson: "",
     persons: {
       create: [
         extractPersonFromFormData(formData, "skipper"),
