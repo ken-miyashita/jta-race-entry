@@ -72,7 +72,18 @@ export default function EntryPerson({
       <DatePicker
         control={control}
         registerName={`${roleName}_birthDay`}
+        registerOptions={required ? { required: "必須項目です" } : {}}
         label="生年月日"
+      />
+      <Select
+        register={register}
+        errors={errors}
+        registerName={`${roleName}_sex`}
+        label="性別"
+        options={[
+          { value: "male", label: "男性" },
+          { value: "female", label: "女性" },
+        ]}
       />
     </Stack>
   );

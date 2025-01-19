@@ -1,7 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 import * as React from "react";
 import { Button, Stack } from "@mui/material";
@@ -18,9 +17,7 @@ export type EntryTeamFormProps = {
   raceId: number;
 };
 
-import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import "dayjs/locale/ja";
-import dayjs, { Dayjs } from "dayjs";
 
 interface EntryTeamFormData {
   sailNumber: string;
@@ -31,17 +28,7 @@ interface EntryTeamFormData {
   place?: string;
   message?: string;
 
-  skipper_lastName: string;
-  skipper_firstName: string;
-  skipper_birthDay: Dayjs; // Date でないので注意
-
-  crew1_lastName: string;
-  crew1_firstName: string;
-  crew1_birthDay: Dayjs;
-
-  crew2_lastName?: string;
-  crew2_firstName?: string;
-  crew2_birthDay: Dayjs;
+  // Person のデータは skipper_xxx, crew1_xxx, crew2_xxx という形式の属性で保持する
 }
 
 export default function EntryTeamForm({ raceId }: EntryTeamFormProps) {
@@ -55,9 +42,6 @@ export default function EntryTeamForm({ raceId }: EntryTeamFormProps) {
   } = useForm<EntryTeamFormData>({
     defaultValues: {
       country: "JPN",
-      skipper_birthDay: dayjs(),
-      crew1_birthDay: dayjs(),
-      crew2_birthDay: dayjs(),
     },
   });
 
