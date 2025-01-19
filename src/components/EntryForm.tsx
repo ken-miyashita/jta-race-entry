@@ -12,7 +12,13 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
-import { Button, Stack } from "@mui/material";
+import {
+  FormControl,
+  InputLabel,
+  Button,
+  Stack,
+  MenuItem,
+} from "@mui/material";
 
 import type { Race } from "@prisma/client";
 
@@ -54,31 +60,20 @@ export default function EntryForm({ raceId }: EntryFormProps) {
   });
 
   const onSubmit: SubmitHandler<EntryFormData> = (data) => console.log(data);
-  /*
-  // こっちは動作する
-  return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <input type="text" {...register("sailNumber", { required: true })} />
-      {errors.sailNumber && <span>セール番号を入力してください</span>}
-      <input type="submit" />
-    </form>
-  );
-  */
-
-  // const foo = register("sailNumber", {
-  //   required: "セール番号を入力してください",
-  //   maxLength: 4,
-  // });
-  // console.log(foo);
 
   return (
     <div>
       <h2>エントリー入力</h2>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <Stack
+        component="form"
+        noValidate
+        onSubmit={handleSubmit(onSubmit)}
+        spacing={2}
+        sx={{ m: 2, width: "25ch" }}
+      >
         <TextField
           {...register("sailNumber", {
             validate: (value) => {
-              console.log("valudate called");
               if (value.length !== 4) {
                 return "セール番号は4文字で入力してください";
               }
@@ -89,8 +84,24 @@ export default function EntryForm({ raceId }: EntryFormProps) {
           error={!!errors.sailNumber}
           helperText={errors.sailNumber?.message}
         />
-        <input type="submit" />
-      </form>
+
+        <FormControl sx={{ m: 1, minWidth: 120 }}>
+          <InputLabel id="country-label">国</InputLabel>
+          <Select
+            {...register("country")}
+            native
+            label="国"
+            error={!!errors.country}
+          >
+            <option value="JPN">日本</option>
+            <option value="USA">アメリカ</option>
+            <option value="AUS">オーストラリア</option>
+          </Select>
+        </FormControl>
+        <Button variant="contained" type="submit">
+          登録
+        </Button>
+      </Stack>
     </div>
   );
 }
