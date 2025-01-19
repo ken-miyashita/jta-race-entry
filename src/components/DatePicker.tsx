@@ -25,7 +25,12 @@ export default function DatePicker({
       <Controller
         control={control}
         name={registerName}
-        rules={registerOptions}
+        rules={{
+          // タイムゾーン計算によって日付がずれるのを防ぐため、日付のみを扱う。
+          // 実際の内部では Dayjs オブジェクトが日本の夜中 0 時を表している。
+          setValueAs: (value: any) => value?.format("YYYY-MM-DD"),
+          ...registerOptions,
+        }}
         render={({ field }) => (
           <MuiDatePicker
             label={label}

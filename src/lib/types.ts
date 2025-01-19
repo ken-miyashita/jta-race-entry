@@ -18,7 +18,7 @@ export type EntryTeamFormData = {
   skipper_role: "skipper" | "crew1" | "crew2";
   skipper_jsafId?: string;
   skipper_jta: boolean;
-  skipper_birthDay: Dayjs;
+  skipper_birthDay: string; // e.g. "2021-10-01"
   skipper_sex: "male" | "female";
   skipper_address: string;
   skipper_eMail: string;
@@ -32,7 +32,7 @@ export type EntryTeamFormData = {
   crew1_role: "skipper" | "crew1" | "crew2";
   crew1_jsafId?: string;
   crew1_jta: boolean;
-  crew1_birthDay: Dayjs;
+  crew1_birthDay: string; // e.g. "2021-10-01"
   crew1_sex: "male" | "female";
   crew1_address: string;
   crew1_eMail: string;
@@ -46,7 +46,7 @@ export type EntryTeamFormData = {
   crew2_role: "skipper" | "crew1" | "crew2";
   crew2_jsafId?: string;
   crew2_jta: boolean;
-  crew2_birthDay: Dayjs;
+  crew2_birthDay: string; // e.g. "2021-10-01"
   crew2_sex: "male" | "female";
   crew2_address: string;
   crew2_eMail: string;
