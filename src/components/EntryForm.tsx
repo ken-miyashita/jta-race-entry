@@ -27,18 +27,18 @@ interface EntryFormData {
   boatWeight: number;
 }
 
-const validationRules = {
-  sailNumber: {
-    required: "セール番号を入力してください",
-    maxLength: 4,
-  },
-  country: {
-    required: "国を選択してください",
-  },
-  boatWeight: {
-    required: "ボート重量を入力してください（キログラた単位）",
-  },
-};
+// const validationRules = {
+//   sailNumber: {
+//     required: "セール番号を入力してください",
+//     maxLength: 4,
+//   },
+//   country: {
+//     required: "国を選択してください",
+//   },
+//   boatWeight: {
+//     required: "ボート重量を入力してください（キログラた単位）",
+//   },
+// };
 
 export default function EntryForm({ raceId }: EntryFormProps) {
   const router = useRouter();
@@ -46,7 +46,6 @@ export default function EntryForm({ raceId }: EntryFormProps) {
   const {
     register,
     handleSubmit,
-    control,
     formState: { errors },
   } = useForm<EntryFormData>({
     defaultValues: {
@@ -66,16 +65,29 @@ export default function EntryForm({ raceId }: EntryFormProps) {
   );
   */
 
+  // const foo = register("sailNumber", {
+  //   required: "セール番号を入力してください",
+  //   maxLength: 4,
+  // });
+  // console.log(foo);
+
   return (
     <div>
       <h2>エントリー入力</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <TextField
           {...register("sailNumber", {
-            required: validationRules.sailNumber.required,
-            maxLength: validationRules.sailNumber.maxLength,
+            validate: (value) => {
+              console.log("valudate called");
+              if (value.length !== 4) {
+                return "セール番号は4文字で入力してください";
+              }
+              return true;
+            },
           })}
           label="セール番号"
+          error={!!errors.sailNumber}
+          helperText={errors.sailNumber?.message}
         />
         <input type="submit" />
       </form>
