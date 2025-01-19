@@ -1,6 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 import * as React from "react";
 import { Button, Stack } from "@mui/material";
@@ -17,6 +18,10 @@ export type EntryTeamFormProps = {
   raceId: number;
 };
 
+import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
+import "dayjs/locale/ja";
+import dayjs, { Dayjs } from "dayjs";
+
 interface EntryTeamFormData {
   sailNumber: string;
   country: string;
@@ -28,24 +33,31 @@ interface EntryTeamFormData {
 
   skipper_lastName: string;
   skipper_firstName: string;
+  skipper_birthDay: Dayjs;
 
   crew1_lastName: string;
   crew1_firstName: string;
+  crew1_birthDay: Dayjs;
 
   crew2_lastName?: string;
   crew2_firstName?: string;
+  crew2_birthDay: Dayjs;
 }
 
 export default function EntryTeamForm({ raceId }: EntryTeamFormProps) {
   const router = useRouter();
 
   const {
+    control,
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<EntryTeamFormData>({
     defaultValues: {
       country: "JPN",
+      skipper_birthDay: dayjs(),
+      crew1_birthDay: dayjs(),
+      crew2_birthDay: dayjs(),
     },
   });
 
@@ -62,6 +74,23 @@ export default function EntryTeamForm({ raceId }: EntryTeamFormProps) {
         spacing={2}
         sx={{ m: 2, width: "25ch" }}
       >
+        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ja">
+          <Controller
+            control={control}
+            name="skipper_birthDay"
+            render={({ field }) => {
+              return (
+                <DatePicker
+                  label="日付を選択"
+                  value={field.value}
+                  inputRef={field.ref}
+                  onChange={(date) => field.onChange(date)}
+                />
+              );
+            }}
+          />
+        </LocalizationProvider>
+
         <TextField
           register={register}
           errors={errors}

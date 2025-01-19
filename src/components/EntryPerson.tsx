@@ -5,8 +5,7 @@ import Select from "./Select";
 
 import type { FieldErrors, FieldValues } from "react-hook-form";
 import { Stack } from "@mui/material";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import DatePicker from "./DatePicker";
 
 interface EntryPersonProps {
   register: any; // react-hook-form の useForm() が返す register 関数
@@ -69,9 +68,19 @@ export default function EntryPerson({
           { value: "no", label: "いいえ" },
         ]}
       />
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DatePicker label="生年月日" />
-      </LocalizationProvider>
+      {/* <DatePicker
+        register={register}
+        errors={errors}
+        registerName={`${roleName}_birthDay`}
+        // registerOptions={{ valueAsDate: true }}
+        registerOptions={{
+          validate: (date: Date) => {
+            console.log("validate for date is called");
+            return true;
+          },
+        }}
+        label="生年月日"
+      /> */}
     </Stack>
   );
 }
