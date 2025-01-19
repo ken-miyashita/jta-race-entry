@@ -60,10 +60,11 @@ export default function EntryPerson({
         register={register}
         errors={errors}
         registerName={`${roleName}_jta`}
+        registerOptions={{ setValueAs: (value: string) => value === "yes" }}
         label="JTA 会員"
         options={[
-          { value: "true", label: "はい" },
-          { value: "false", label: "いいえ" },
+          { value: "yes", label: "はい" },
+          { value: "no", label: "いいえ" },
         ]}
       />
     </Stack>

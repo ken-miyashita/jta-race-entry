@@ -15,7 +15,7 @@ export type SelectProps = {
   registerName: string; // react-hook-form の useForm() が返す register 関数の引数 e.g. 'country'
   registerOptions?: any; // react-hook-form の useForm() が返す register 関数の引数
   label: string; // e.g. '国'
-  options: { value: string; label: string }[]; // e.g. [{ value: 'JPN', label: '日本' }, { value: 'USA', label: 'アメリカ' }]
+  options: { value: string | number; label: string }[]; // e.g. [{ value: 'JPN', label: '日本' }, { value: 'USA', label: 'アメリカ' }]
 };
 
 export default function TextField({

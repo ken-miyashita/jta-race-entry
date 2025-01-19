@@ -15,11 +15,11 @@ model Person {
   firstNameRomaji String
   team            Team @relation(fields: [teamId], references: [id])
   teamId          Int
-  role            Int      // 0: スキッパー, 1: クルー１, 2: クルー２
+  role            String   // "skipper" | "crew1" | "crew2"
   jsafId          String?  // JSAF 会員か不問のとき、もしくは会員でない場合は null
   jta             Boolean  // true: JTA会員である
   birthDay        DateTime
-  sex             Boolean  // true: 男性、false: 女性
+  sex             String   // "male" | "female"
   address         String
   eMail           String
   phone           String

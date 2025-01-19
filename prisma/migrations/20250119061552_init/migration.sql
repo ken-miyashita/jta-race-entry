@@ -6,15 +6,16 @@ CREATE TABLE `Person` (
     `lastNameRomaji` VARCHAR(191) NOT NULL,
     `firstNameRomaji` VARCHAR(191) NOT NULL,
     `teamId` INTEGER NOT NULL,
-    `role` INTEGER NOT NULL,
+    `role` VARCHAR(191) NOT NULL,
     `jsafId` VARCHAR(191) NULL,
-    `jta` BOOLEAN NOT NULL,
+    `jta` INTEGER NOT NULL,
     `birthDay` DATETIME(3) NOT NULL,
-    `sex` BOOLEAN NOT NULL,
+    `sex` VARCHAR(191) NOT NULL,
     `address` VARCHAR(191) NOT NULL,
     `eMail` VARCHAR(191) NOT NULL,
     `phone` VARCHAR(191) NOT NULL,
     `fax` VARCHAR(191) NULL,
+    `miscInJson` VARCHAR(191) NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
     PRIMARY KEY (`id`)
@@ -31,6 +32,7 @@ CREATE TABLE `Team` (
     `place` VARCHAR(191) NULL,
     `message` VARCHAR(191) NULL,
     `raceId` INTEGER NOT NULL,
+    `miscInJson` VARCHAR(191) NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
     PRIMARY KEY (`id`)
@@ -44,6 +46,7 @@ CREATE TABLE `Race` (
     `mailBcc` VARCHAR(191) NULL,
     `dateOfRaceBegin` DATETIME(3) NOT NULL,
     `dateOfRaceEnd` DATETIME(3) NOT NULL,
+    `miscInJson` VARCHAR(191) NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
     PRIMARY KEY (`id`)
