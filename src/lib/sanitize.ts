@@ -1,6 +1,13 @@
 import { Dayjs } from "dayjs";
 import { EntryTeamFormData } from "./types";
 
+// 全角文字を半角文字に変換する
+export function sanitizeZenkaku(value: string): string {
+  return value.replace(/[Ａ-Ｚａ-ｚ０-９]/g, (s) => {
+    return String.fromCharCode(s.charCodeAt(0) - 0xfee0);
+  });
+}
+
 export function sanitizeFormData(
   formData: EntryTeamFormData
 ): EntryTeamFormData {
