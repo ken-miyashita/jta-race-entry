@@ -24,19 +24,34 @@ export default function TeamTable({ teams }: TeamTableProps) {
         <TableHead>
           <TableRow>
             <TableCell>セール番号</TableCell>
+            <TableCell>国コード</TableCell>
+            <TableCell>艇名</TableCell>
+            <TableCell>所属フリート</TableCell>
+            <TableCell>活動海域</TableCell>
             <TableCell>スキッパー</TableCell>
             <TableCell>クルー１</TableCell>
             <TableCell>クルー２</TableCell>
+            <TableCell></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {teams.map((team) => {
-            const skipper = team.persons.find((person) => person.role === 0);
-            const crew1 = team.persons.find((person) => person.role === 1);
-            const crew2 = team.persons.find((person) => person.role === 2);
+            const skipper = team.persons.find(
+              (person) => person.role === "skipper"
+            );
+            const crew1 = team.persons.find(
+              (person) => person.role === "crew1"
+            );
+            const crew2 = team.persons.find(
+              (person) => person.role === "crew2"
+            );
             return (
               <TableRow key={team.id}>
                 <TableCell>{team.sailNumber}</TableCell>
+                <TableCell>{team.country}</TableCell>
+                <TableCell>{team.boatName}</TableCell>
+                <TableCell>{team.fleet}</TableCell>
+                <TableCell>{team.place}</TableCell>
                 <TableCell>
                   {skipper?.lastName} {skipper?.firstName}
                 </TableCell>

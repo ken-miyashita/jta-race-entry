@@ -15,7 +15,6 @@ export default async function ListEntries(props: {
 
   const race = await prisma.race.findUnique({
     where: { id: raceId },
-    include: { teams: true },
   });
 
   if (!race) notFound();
