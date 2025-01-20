@@ -7,6 +7,7 @@ export function sanitizeFormData(
   return {
     ...formData,
     sailNumber: sanitizeString(formData.sailNumber),
+    boatWeight: sanitizeNumber(formData.boatWeight),
 
     skipper_jsafId: sanitizeString(formData.skipper_jsafId),
     skipper_birthDay: sanitizeDay(formData.skipper_birthDay),
@@ -42,5 +43,20 @@ function sanitizeDay(day: Dayjs | string | undefined): string | undefined {
     return undefined;
   } else {
     return typeof day === "string" ? day : day.format("YYYY-MM-DD");
+  }
+}
+
+// 数値を整形する
+// - 全角文字を半角文字に変換
+// - 数値以外の文字の場合は 0 に変換
+function sanitizeNumber(value: string | number): number {
+  if (typeof value === "string") {
+    const numString = value.replace(/[０-９]/g, (s) => {
+      return String.fromCharCode(s.charCodeAt(0) - 0xfee0);
+    });
+    const num = parseFloat(numString);
+    return isNaN(num) ? 0 : num;
+  } else {
+    return value;
   }
 }

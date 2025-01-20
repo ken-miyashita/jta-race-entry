@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 
 import * as React from "react";
 import { Button, Stack } from "@mui/material";
@@ -9,7 +9,6 @@ import TextField from "./TextField";
 import Select from "./Select";
 import { countries } from "../lib/country";
 
-import type { Race } from "@prisma/client";
 import { validateSailNumber } from "../lib/validate";
 import EntryPerson from "./EntryPerson";
 
@@ -24,7 +23,6 @@ import "dayjs/locale/ja";
 
 export default function EntryTeamForm({ raceId }: EntryTeamFormProps) {
   const router = useRouter();
-
   const {
     register,
     control,
@@ -38,10 +36,11 @@ export default function EntryTeamForm({ raceId }: EntryTeamFormProps) {
 
   const onSubmit: SubmitHandler<EntryTeamFormData> = async (formData) => {
     try {
-      console.log(formData);
-
       const sanitizedFormData = sanitizeFormData(formData);
       const body = { raceId, ...sanitizedFormData };
+
+      console.log(body);
+
       await fetch(`/api/new_entry`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -50,6 +49,7 @@ export default function EntryTeamForm({ raceId }: EntryTeamFormProps) {
     } catch (error) {
       console.error(error);
     }
+    router.back();
   };
   return (
     <div>
@@ -93,7 +93,6 @@ export default function EntryTeamForm({ raceId }: EntryTeamFormProps) {
           registerName="boatWeight"
           registerOptions={{
             required: "ハル重量を入力してください",
-            valueAsNumber: true,
           }}
           label="ハル重量（キログラム）"
         />
