@@ -1,13 +1,7 @@
 import { Dayjs } from "dayjs";
 import { EntryTeamFormData } from "./types";
 
-// 全角文字を半角文字に変換する
-export function sanitizeZenkaku(value: string): string {
-  return value.replace(/[Ａ-Ｚａ-ｚ０-９]/g, (s) => {
-    return String.fromCharCode(s.charCodeAt(0) - 0xfee0);
-  });
-}
-
+// フォームデータを整形する
 export function sanitizeFormData(
   formData: EntryTeamFormData
 ): EntryTeamFormData {
@@ -36,16 +30,25 @@ export function sanitizeFormData(
   };
 }
 
+// 全角文字を半角文字に変換する
+export function sanitizeZenkaku(value: string): string {
+  return value
+    .replace(/[\uff01-\uff5e]/g, function (ch) {
+      return String.fromCharCode(ch.charCodeAt(0) - 0xfee0);
+    })
+    .replace(/\u3000/g, " ");
+}
+
 // 文字列を整形する
 // - 全角文字を半角文字に変換
-function sanitizeString(value: string): string {
-  return value.replace(/[Ａ-Ｚａ-ｚ０-９]/g, (s) => {
-    return String.fromCharCode(s.charCodeAt(0) - 0xfee0);
-  });
+export function sanitizeString(value: string): string {
+  return sanitizeZenkaku(value);
 }
 
 // 日付を YYYY-MM-DD の形式の文字列もしくは undefined に変換する
-function sanitizeDay(day: Dayjs | string | undefined): string | undefined {
+export function sanitizeDay(
+  day: Dayjs | string | undefined
+): string | undefined {
   if (!day) {
     return undefined;
   } else {
@@ -56,11 +59,9 @@ function sanitizeDay(day: Dayjs | string | undefined): string | undefined {
 // 数値を整形する
 // - 全角文字を半角文字に変換
 // - 数値以外の文字の場合は 0 に変換
-function sanitizeNumber(value: string | number): number {
+export function sanitizeNumber(value: string | number): number {
   if (typeof value === "string") {
-    const numString = value.replace(/[０-９]/g, (s) => {
-      return String.fromCharCode(s.charCodeAt(0) - 0xfee0);
-    });
+    const numString = sanitizeZenkaku(value);
     const num = parseFloat(numString);
     return isNaN(num) ? 0 : num;
   } else {
