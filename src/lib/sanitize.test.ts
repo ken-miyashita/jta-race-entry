@@ -10,7 +10,7 @@ describe("sanitizeZenkaku", () => {
     expect(sanitizeZenkaku("０１９")).toBe("019");
   });
   it("記号", () => {
-    expect(sanitizeZenkaku("＠＃＄")).toBe("@#$");
+    expect(sanitizeZenkaku("＠＃＄ー")).toBe("@#$-");
   });
   it("全角文字をそのまま維持", () => {
     expect(sanitizeZenkaku("あいうえお")).toBe("あいうえお");

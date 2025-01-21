@@ -25,6 +25,15 @@ export function validatePositiveNumber(value: string) {
   return true;
 }
 
+export function validateAlphabets(value: string) {
+  const hankakuString = sanitizeZenkaku(value);
+  const invalidCharacter = checkValidCharacters(hankakuString, "a-zA-Z,\\- ");
+  if (invalidCharacter) {
+    return `"${invalidCharacter}" を含まないアルファベットを入力してください"`;
+  }
+  return true;
+}
+
 export function validateEmail(value: string) {
   const hankakuString = sanitizeZenkaku(value);
   const invalidCharacter = checkValidCharacters(

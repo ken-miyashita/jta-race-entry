@@ -35,8 +35,9 @@ export function sanitizeZenkaku(value: string): string {
   return value
     .replace(/[\uff01-\uff5e]/g, function (ch) {
       return String.fromCharCode(ch.charCodeAt(0) - 0xfee0);
-    })
-    .replace(/\u3000/g, " ");
+    }) // アルファベット、数字、記号
+    .replace(/[\u2010-\u2015ー]/g, "-") // さまざまなハイフン
+    .replace(/\u3000/g, " "); // 空白
 }
 
 // 文字列を整形する

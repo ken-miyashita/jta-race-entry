@@ -1,6 +1,7 @@
 import {
   validateSailNumber,
   validatePositiveNumber,
+  validateAlphabets,
   validateEmail,
   validatePhoneNumber,
   validateDate,
@@ -48,6 +49,18 @@ describe("validatePositiveNumber", () => {
   });
   it("負の整数（全角）なので不正", () => {
     expect(validatePositiveNumber("ー７８９")).not.toBe(true);
+  });
+});
+
+describe("validateAlphabets", () => {
+  it("空文字列は正しい", () => {
+    expect(validateAlphabets("")).toBe(true);
+  });
+  it("正しいアルファベット", () => {
+    expect(validateAlphabets("John Doe,-")).toBe(true);
+  });
+  it("不正文字を含むので不正", () => {
+    expect(validateAlphabets("John Doe!")).not.toBe(true);
   });
 });
 
