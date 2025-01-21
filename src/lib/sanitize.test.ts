@@ -1,4 +1,4 @@
-import { sanitizeZenkaku, sanitizeDay, sanitizeNumber } from "./sanitize";
+import { sanitizeZenkaku, sanitizeDate, sanitizeNumber } from "./sanitize";
 import dayjs from "dayjs";
 
 describe("sanitizeZenkaku", () => {
@@ -19,15 +19,21 @@ describe("sanitizeZenkaku", () => {
   });
 });
 
-describe("sanitizeDay", () => {
+describe("sanitizeDate", () => {
   it("undefined", () => {
-    expect(sanitizeDay(undefined)).toBe(undefined);
+    expect(sanitizeDate(undefined)).toBe("");
+  });
+  it("null", () => {
+    expect(sanitizeDate(null)).toBe("");
+  });
+  it("空文字列", () => {
+    expect(sanitizeDate("")).toBe("");
   });
   it("string", () => {
-    expect(sanitizeDay("2022-01-01")).toBe("2022-01-01");
+    expect(sanitizeDate("2022-01-01")).toBe("2022-01-01");
   });
   it("Dayjs", () => {
-    expect(sanitizeDay(dayjs("2022-01-01"))).toBe("2022-01-01");
+    expect(sanitizeDate(dayjs("2022-01-01"))).toBe("2022-01-01");
   });
 });
 

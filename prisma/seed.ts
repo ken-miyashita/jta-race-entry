@@ -7,8 +7,8 @@ const raceData: Prisma.RaceCreateInput[] = [
     name: "2000年度 正月レガッタ",
     mailFrom: "foo@example.com",
     mailBcc: "",
-    dateOfRaceBegin: new Date("2000-01-01"),
-    dateOfRaceEnd: new Date("2000-01-03"),
+    dateOfRaceBegin: "2000-01-01",
+    dateOfRaceEnd: "2000-01-03",
     miscInJson: "",
     teams: {
       create: [
@@ -31,7 +31,7 @@ const raceData: Prisma.RaceCreateInput[] = [
                 role: "skipper",
                 jsafId: "1-222-333",
                 jta: true,
-                birthDay: new Date("1970-01-01"),
+                birthDay: "1970-01-01",
                 sex: "male",
                 address: "東京都港区",
                 eMail: "taro@example.com",
@@ -47,7 +47,7 @@ const raceData: Prisma.RaceCreateInput[] = [
                 role: "crew1",
                 jsafId: "",
                 jta: false,
-                birthDay: new Date("1970-01-01"),
+                birthDay: "1970-01-01",
                 sex: "female",
                 address: "東京都港区",
                 eMail: "hanako@example.com",

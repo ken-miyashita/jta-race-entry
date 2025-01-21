@@ -18,7 +18,7 @@ model Person {
   role            String   // "skipper" | "crew1" | "crew2"
   jsafId          String   // JSAF 会員か不問のとき、もしくは会員でない場合は空文字列
   jta             Boolean  // true: JTA会員である
-  birthDay        DateTime?
+  birthDay        String   // "YYYY-MM-DD"  e.g. "2000-01-23"
   sex             String   // "male" | "female"
   address         String
   eMail           String
@@ -49,8 +49,8 @@ model Race {
   name            String  // e.g. "2025年度 テーザースプリングレガッタ"
   mailFrom        String  // 通知メールの From 欄
   mailBcc         String  // 通知メールの Bcc 欄
-  dateOfRaceBegin DateTime
-  dateOfRaceEnd   DateTime
+  dateOfRaceBegin String  // "YYYY-MM-DD"  e.g. "2000-08-01"
+  dateOfRaceEnd   String  // "YYYY-MM-DD"  e.g. "2000-08-03"
   teams           Team[]
   miscInJson      String   // その他、スキーマを変更しないで追加情報を覚えたいとき用
   createdAt       DateTime @default(now())

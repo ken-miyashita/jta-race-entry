@@ -9,7 +9,7 @@ import TextField from "./TextField";
 import Select from "./Select";
 import { countries } from "../lib/country";
 
-import { validateNumber, validateSailNumber } from "../lib/validate";
+import { validatePositiveNumber, validateSailNumber } from "../lib/validate";
 import EntryPerson from "./EntryPerson";
 
 import type { EntryTeamFormData } from "../lib/types";
@@ -93,7 +93,7 @@ export default function EntryTeamForm({ raceId }: EntryTeamFormProps) {
           registerName="boatWeight"
           registerOptions={{
             required: "ハル重量を入力してください",
-            validate: validateNumber,
+            validate: validatePositiveNumber,
           }}
           label="ハル重量（キログラム）"
         />

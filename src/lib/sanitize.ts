@@ -11,19 +11,19 @@ export function sanitizeFormData(
     boatWeight: sanitizeNumber(formData.boatWeight),
 
     skipper_jsafId: sanitizeString(formData.skipper_jsafId),
-    skipper_birthDay: sanitizeDay(formData.skipper_birthDay),
+    skipper_birthDay: sanitizeDate(formData.skipper_birthDay),
     skipper_eMail: sanitizeString(formData.skipper_eMail),
     skipper_phone: sanitizeString(formData.skipper_phone),
     skipper_fax: sanitizeString(formData.skipper_fax),
 
     crew1_jsafId: sanitizeString(formData.crew1_jsafId),
-    crew1_birthDay: sanitizeDay(formData.crew1_birthDay),
+    crew1_birthDay: sanitizeDate(formData.crew1_birthDay),
     crew1_eMail: sanitizeString(formData.crew1_eMail),
     crew1_phone: sanitizeString(formData.crew1_phone),
     crew1_fax: sanitizeString(formData.crew1_fax),
 
     crew2_jsafId: sanitizeString(formData.crew2_jsafId),
-    crew2_birthDay: sanitizeDay(formData.crew2_birthDay),
+    crew2_birthDay: sanitizeDate(formData.crew2_birthDay),
     crew2_eMail: sanitizeString(formData.crew2_eMail),
     crew2_phone: sanitizeString(formData.crew2_phone),
     crew2_fax: sanitizeString(formData.crew2_fax),
@@ -45,14 +45,12 @@ export function sanitizeString(value: string): string {
   return sanitizeZenkaku(value);
 }
 
-// 日付を YYYY-MM-DD の形式の文字列もしくは undefined に変換する
-export function sanitizeDay(
-  day: Dayjs | string | undefined
-): string | undefined {
-  if (!day) {
-    return undefined;
+// 日付を YYYY-MM-DD の形式の文字列もしくは空文字列に変換する
+export function sanitizeDate(date: Dayjs | string | null | undefined): string {
+  if (!date) {
+    return "";
   } else {
-    return typeof day === "string" ? day : day.format("YYYY-MM-DD");
+    return typeof date === "string" ? date : date.format("YYYY-MM-DD");
   }
 }
 

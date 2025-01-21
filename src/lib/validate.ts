@@ -46,6 +46,23 @@ export function validatePhoneNumber(value: string) {
   return true;
 }
 
+// YYYY-MM-DD の形式の日付文字列であるか確認する
+export function validateDate(value: string) {
+  if (value === "") {
+    return true;
+  }
+  const hankakuString = sanitizeZenkaku(value);
+  const invalidCharacter = checkValidCharacters(hankakuString, "0-9\\-");
+  if (invalidCharacter) {
+    return `"${invalidCharacter}" を含まない正しい日付を入力してください`;
+  }
+  const date = new Date(hankakuString);
+  if (isNaN(date.getTime())) {
+    return "正しい日付を入力してください";
+  }
+  return true;
+}
+
 // 正しい文字のみを含むか確認する
 // @param value:　検査対象
 // @param validCharacters: 正規表現で表した正しい文字集合  e.g. "0-9a-zA-Z"

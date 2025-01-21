@@ -3,6 +3,7 @@ import {
   validatePositiveNumber,
   validateEmail,
   validatePhoneNumber,
+  validateDate,
 } from "./validate";
 
 describe("validateSailNumber", () => {
@@ -71,5 +72,20 @@ describe("validatePhoneNumber", () => {
   });
   it("不正文字を含むので不正", () => {
     expect(validatePhoneNumber("(0123)a45")).not.toBe(true);
+  });
+});
+
+describe("validateDate", () => {
+  it("空文字列は正しい", () => {
+    expect(validateDate("")).toBe(true);
+  });
+  it("正しい日付", () => {
+    expect(validateDate("2022-01-01")).toBe(true);
+  });
+  it("不正文字を含むので不正", () => {
+    expect(validateDate("2022-01-01a")).not.toBe(true);
+  });
+  it("ありそうな不正文字を含むが不正", () => {
+    expect(validateDate("2022/01/23")).not.toBe(true);
   });
 });

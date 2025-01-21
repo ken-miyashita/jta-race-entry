@@ -34,8 +34,8 @@ export default function RaceTable({ races }: RaceTableProps) {
           {races.map((race) => (
             <TableRow key={race.id} hover onClick={() => handleClick(race.id)}>
               <TableCell>{race.name}</TableCell>
-              <TableCell>{race.dateOfRaceBegin.toDateString()}</TableCell>
-              <TableCell>{race.dateOfRaceEnd.toDateString()}</TableCell>
+              <TableCell>{race.dateOfRaceBegin}</TableCell>
+              <TableCell>{race.dateOfRaceEnd}</TableCell>
             </TableRow>
           ))}
         </TableBody>

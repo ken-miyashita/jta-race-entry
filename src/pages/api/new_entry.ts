@@ -9,11 +9,16 @@ export default async function handle(
   res: NextApiResponse
 ) {
   const { raceId, ...formData } = req.body;
-  const extractedTeam = extractTeamFromFormData(formData, raceId);
-  const result = await prisma.team.create({
-    data: extractedTeam,
-  });
-  return res.status(201).json(result);
+  try {
+    const extractedTeam = extractTeamFromFormData(formData, raceId);
+    const result = await prisma.team.create({
+      data: extractedTeam,
+    });
+    return res.status(201).json(result);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Something went wrong" });
+  }
 }
 
 function extractTeamFromFormData(
@@ -41,8 +46,6 @@ function extractTeamFromFormData(
 }
 
 function extractPersonFromFormData(formData: any, role: string): any {
-  const birtyDayString = formData[`${role}_birdyDay`];
-  const birthDay = birtyDayString ? new Date(birtyDayString) : undefined;
   return {
     lastName: formData[`${role}_lastName`],
     firstName: formData[`${role}_firstName`],
@@ -51,7 +54,7 @@ function extractPersonFromFormData(formData: any, role: string): any {
     role: role,
     jsafId: formData[`${role}_jsafId`],
     jta: formData[`${role}_jta`],
-    birthDay,
+    birthDay: formData[`${role}_birthDay`],
     sex: formData[`${role}_sex`],
     address: formData[`${role}_address`],
     eMail: formData[`${role}_eMail`],
