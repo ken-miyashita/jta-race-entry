@@ -3,8 +3,24 @@ import { EntryTeamFormData } from "./types";
 
 // フォームデータを整形する
 export function sanitizeFormData(
-  formData: EntryTeamFormData
+  formData: EntryTeamFormData,
+  isCrew2Valid: boolean
 ): EntryTeamFormData {
+  if (!isCrew2Valid) {
+    formData.crew2_lastName = "";
+    formData.crew2_firstName = "";
+    formData.crew2_lastNameRomaji = "";
+    formData.crew2_firstNameRomaji = "";
+    formData.crew2_role = "crew2";
+    formData.crew2_jsafId = "";
+    formData.crew2_jta = false;
+    formData.crew2_birthDay = "";
+    formData.crew2_sex = "male";
+    formData.crew2_address = "";
+    formData.crew2_eMail = "";
+    formData.crew2_phone = "";
+    formData.crew2_fax = "";
+  }
   return {
     ...formData,
     sailNumber: sanitizeString(formData.sailNumber),

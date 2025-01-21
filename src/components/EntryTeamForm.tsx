@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 import * as React from "react";
-import { Button, Stack } from "@mui/material";
+import { Button, Stack, FormControlLabel, Checkbox } from "@mui/material";
 
 import TextField from "./TextField";
 import Select from "./Select";
@@ -34,9 +34,13 @@ export default function EntryTeamForm({ raceId }: EntryTeamFormProps) {
     },
   });
 
+  const [isCrew2Valid, setIsCrew2Valid] = React.useState<boolean>(false);
+  const handleCrew2Valid = () => {
+    setIsCrew2Valid(!isCrew2Valid);
+  };
   const onSubmit: SubmitHandler<EntryTeamFormData> = async (formData) => {
     try {
-      const sanitizedFormData = sanitizeFormData(formData);
+      const sanitizedFormData = sanitizeFormData(formData, isCrew2Valid);
       const body = { raceId, ...sanitizedFormData };
 
       console.log(body);
@@ -132,13 +136,21 @@ export default function EntryTeamForm({ raceId }: EntryTeamFormProps) {
           required
         />
         <h3>クルー２（オプション）</h3>
-        <EntryPerson
-          register={register}
-          errors={errors}
-          control={control}
-          roleName="crew2"
-          required={false}
+        <FormControlLabel
+          control={
+            <Checkbox checked={isCrew2Valid} onChange={handleCrew2Valid} />
+          }
+          label="クルー２を登録"
         />
+        {isCrew2Valid && (
+          <EntryPerson
+            register={register}
+            errors={errors}
+            control={control}
+            roleName="crew2"
+            required
+          />
+        )}
         <Button variant="contained" type="submit">
           登録
         </Button>
