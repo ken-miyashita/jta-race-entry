@@ -2,20 +2,46 @@ import { sanitizeZenkaku } from "./sanitize";
 
 export function validateSailNumber(value: string) {
   const numString = sanitizeZenkaku(value);
-  if (isNaN(Number(numString))) {
-    return "セール番号を数値で入力してください";
+  const invalidCharacter = checkValidCharacters(numString, "0-9");
+  if (invalidCharacter) {
+    return `"${invalidCharacter}" を含まないセール番号を数値で入力してください`;
   }
-  if (value.length > 4) {
+  if (numString.length > 4) {
     return "セール番号は4桁以下の数値で入力してください";
   }
   return true;
 }
 
 //
-export function validateNumber(value: string) {
+export function validatePositiveNumber(value: string) {
   const numString = sanitizeZenkaku(value);
+  const invalidCharacter = checkValidCharacters(numString, "0-9.");
+  if (invalidCharacter) {
+    return `"${invalidCharacter}" を含まない正の数値を入力してください`;
+  }
   if (isNaN(Number(numString))) {
-    return "数値を入力してください";
+    return "正の数値を入力してください";
+  }
+  return true;
+}
+
+export function validateEmail(value: string) {
+  const hankakuString = sanitizeZenkaku(value);
+  const invalidCharacter = checkValidCharacters(
+    hankakuString,
+    "0-9a-zA-Z@._\\-+"
+  );
+  if (invalidCharacter) {
+    return `"${invalidCharacter}" を含まない正しいメールアドレスを入力してください`;
+  }
+  return true;
+}
+
+export function validatePhoneNumber(value: string) {
+  const hankakuString = sanitizeZenkaku(value);
+  const invalidCharacter = checkValidCharacters(hankakuString, "0-9()\\-+ ");
+  if (invalidCharacter) {
+    return `"${invalidCharacter}" を含まない正しい電話番号を入力してください`;
   }
   return true;
 }
@@ -24,7 +50,7 @@ export function validateNumber(value: string) {
 // @param value:　検査対象
 // @param validCharacters: 正規表現で表した正しい文字集合  e.g. "0-9a-zA-Z"
 // @returns 不正文字を含まないときは undefined、不正文字を含むときは最初の不正文字
-export function checkValidCharacters(
+function checkValidCharacters(
   value: string,
   validCharacters: string
 ): string | undefined {
