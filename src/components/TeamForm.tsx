@@ -40,10 +40,6 @@ export default function TeamForm({ initialFormData, onSubmit }: TeamFormProps) {
   // チェックボックスの値を監視して、crew2 用の UI を表示するかどうかを決める。
   const isCrew2Valid = watch("isCrew2Valid");
 
-  // debug!!!
-  const watchedData = watch();
-  console.log("watchedData = ", watchedData);
-
   return (
     <Stack
       component="form"
@@ -124,7 +120,9 @@ export default function TeamForm({ initialFormData, onSubmit }: TeamFormProps) {
       />
       <h3>クルー２（オプション）</h3>
       <FormControlLabel
-        control={<Checkbox {...register("isCrew2Valid")} />}
+        control={
+          <Checkbox checked={isCrew2Valid} {...register("isCrew2Valid")} />
+        }
         label="クルー２"
       />
       {isCrew2Valid && (
@@ -144,7 +142,8 @@ export default function TeamForm({ initialFormData, onSubmit }: TeamFormProps) {
 }
 
 // 日付データを Dayjs に変換する。
-function tweakFormData(formData: TeamFormData) {
+function tweakFormData(formData?: TeamFormData) {
+  if (!formData) return undefined;
   const { skipper, crew1, crew2, ...rest } = formData;
   const tweakedSkipper = {
     ...skipper,
