@@ -53,3 +53,11 @@ export type EntryTeamFormData = {
   crew2_phone: string;
   crew2_fax: string;
 };
+
+export type NewRaceFormData = {
+  name: string;
+  mailFrom: string;
+  mailBcc: string;
+  startDate?: Dayjs | string;
+  endDate?: Dayjs | string;
+};

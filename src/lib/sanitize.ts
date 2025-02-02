@@ -1,5 +1,5 @@
 import { Dayjs } from "dayjs";
-import { EntryTeamFormData } from "./types";
+import { EntryTeamFormData, NewRaceFormData } from "./types";
 
 // フォームデータを整形する
 export function sanitizeFormData(
@@ -43,6 +43,18 @@ export function sanitizeFormData(
     crew2_eMail: sanitizeString(formData.crew2_eMail),
     crew2_phone: sanitizeString(formData.crew2_phone),
     crew2_fax: sanitizeString(formData.crew2_fax),
+  };
+}
+
+export function sanitizeRaceFormData(
+  formData: NewRaceFormData
+): NewRaceFormData {
+  return {
+    name: sanitizeString(formData.name),
+    mailFrom: sanitizeString(formData.mailFrom),
+    mailBcc: sanitizeString(formData.mailBcc),
+    startDate: sanitizeDate(formData.startDate),
+    endDate: sanitizeDate(formData.endDate),
   };
 }
 

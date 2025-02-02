@@ -7,8 +7,8 @@ const raceData: Prisma.RaceCreateInput[] = [
     name: "2000年度 正月レガッタ",
     mailFrom: "foo@example.com",
     mailBcc: "",
-    dateOfRaceBegin: "2000-01-01",
-    dateOfRaceEnd: "2000-01-03",
+    startDate: "2000-01-01",
+    endDate: "2000-01-03",
     miscInJson: "",
     teams: {
       create: [

@@ -49,8 +49,8 @@ model Race {
   name            String  // e.g. "2025年度 テーザースプリングレガッタ"
   mailFrom        String  // 通知メールの From 欄
   mailBcc         String  // 通知メールの Bcc 欄
-  dateOfRaceBegin String  // "YYYY-MM-DD"  e.g. "2000-08-01"
-  dateOfRaceEnd   String  // "YYYY-MM-DD"  e.g. "2000-08-03"
+  startDate       String  // "YYYY-MM-DD"  e.g. "2000-08-01"
+  endDate         String  // "YYYY-MM-DD"  e.g. "2000-08-03"
   teams           Team[]
   miscInJson      String   // その他、スキーマを変更しないで追加情報を覚えたいとき用
   createdAt       DateTime @default(now())

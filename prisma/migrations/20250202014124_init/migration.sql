@@ -44,8 +44,8 @@ CREATE TABLE `Race` (
     `name` VARCHAR(191) NOT NULL,
     `mailFrom` VARCHAR(191) NOT NULL,
     `mailBcc` VARCHAR(191) NOT NULL,
-    `dateOfRaceBegin` VARCHAR(191) NOT NULL,
-    `dateOfRaceEnd` VARCHAR(191) NOT NULL,
+    `startDate` VARCHAR(191) NOT NULL,
+    `endDate` VARCHAR(191) NOT NULL,
     `miscInJson` VARCHAR(191) NOT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
