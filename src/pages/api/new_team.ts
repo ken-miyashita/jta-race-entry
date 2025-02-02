@@ -2,8 +2,8 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { Prisma } from "@prisma/client";
 import prisma from "../../lib/prisma";
 
-// POST /api/new_entry
-// Required fields in body: {raceId, ...entryTeamFormData}
+// POST /api/new_team
+// Required fields in body: {raceId, ...formData}
 export default async function handle(
   req: NextApiRequest,
   res: NextApiResponse

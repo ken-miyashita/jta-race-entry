@@ -7,7 +7,7 @@ type PageParams = {
   raceId: number;
 };
 
-export default async function ListEntries(props: {
+export default async function ListTeams(props: {
   params: Promise<PageParams>;
 }) {
   const params = await props.params;

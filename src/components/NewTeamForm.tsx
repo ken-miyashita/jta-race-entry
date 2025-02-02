@@ -10,25 +10,25 @@ import Select from "./Select";
 import { countries } from "../lib/country";
 
 import { validatePositiveNumber, validateSailNumber } from "../lib/validate";
-import EntryPerson from "./EntryPerson";
+import NewPerson from "./NewPerson";
 
-import type { EntryTeamFormData } from "../lib/types";
+import type { NewTeamFormData } from "../lib/types";
 import { sanitizeFormData } from "../lib/sanitize";
 
-export type EntryTeamFormProps = {
+export type NewTeamFormProps = {
   raceId: number;
 };
 
 import "dayjs/locale/ja";
 
-export default function EntryTeamForm({ raceId }: EntryTeamFormProps) {
+export default function NewTeamForm({ raceId }: NewTeamFormProps) {
   const router = useRouter();
   const {
     register,
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<EntryTeamFormData>({
+  } = useForm<NewTeamFormData>({
     defaultValues: {
       country: "JPN",
     },
@@ -38,14 +38,14 @@ export default function EntryTeamForm({ raceId }: EntryTeamFormProps) {
   const handleCrew2Valid = () => {
     setIsCrew2Valid(!isCrew2Valid);
   };
-  const onSubmit: SubmitHandler<EntryTeamFormData> = async (formData) => {
+  const onSubmit: SubmitHandler<NewTeamFormData> = async (formData) => {
     try {
       const sanitizedFormData = sanitizeFormData(formData, isCrew2Valid);
       const body = { raceId, ...sanitizedFormData };
 
       console.log(body);
 
-      await fetch(`/api/new_entry`, {
+      await fetch(`/api/new_team`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
@@ -120,7 +120,7 @@ export default function EntryTeamForm({ raceId }: EntryTeamFormProps) {
           label="連絡事項"
         />
         <h3>スキッパー</h3>
-        <EntryPerson
+        <NewPerson
           register={register}
           errors={errors}
           control={control}
@@ -128,7 +128,7 @@ export default function EntryTeamForm({ raceId }: EntryTeamFormProps) {
           required
         />
         <h3>クルー１</h3>
-        <EntryPerson
+        <NewPerson
           register={register}
           errors={errors}
           control={control}
@@ -143,7 +143,7 @@ export default function EntryTeamForm({ raceId }: EntryTeamFormProps) {
           label="クルー２を登録"
         />
         {isCrew2Valid && (
-          <EntryPerson
+          <NewPerson
             register={register}
             errors={errors}
             control={control}

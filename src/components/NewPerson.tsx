@@ -12,7 +12,7 @@ import {
   validatePhoneNumber,
 } from "../lib/validate";
 
-interface EntryPersonProps {
+interface NewPersonProps {
   register: any; // react-hook-form の useForm() が返す register 関数
   errors: FieldErrors<FieldValues>; // react-hook-form の useForm() が返す errors
   control: any; // react-hook-form の useForm() が返す control オブジェクト
@@ -20,13 +20,13 @@ interface EntryPersonProps {
   required: boolean;
 }
 
-export default function EntryPerson({
+export default function NewPerson({
   register,
   errors,
   control,
   roleName,
   required,
-}: EntryPersonProps) {
+}: NewPersonProps) {
   return (
     <Stack component="div" spacing={2} sx={{ m: 2, width: "25ch" }}>
       <TextField

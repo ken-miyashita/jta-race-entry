@@ -11,20 +11,20 @@ export type RacePortalProps = {
 export default function RacePortal({ raceId }: RacePortalProps) {
   const router = useRouter();
 
-  const handleListEntries = () => {
-    router.push(`/race/${raceId}/list_entries`);
+  const handleListTeams = () => {
+    router.push(`/race/${raceId}/list_teams`);
   };
-  const handleNewEntry = () => {
-    router.push(`/race/${raceId}/new_entry`);
+  const handleNewTeam = () => {
+    router.push(`/race/${raceId}/new_team`);
   };
 
   return (
     <Stack spacing={2} sx={{ m: 2, width: "25ch" }}>
-      <Button variant="contained" onClick={handleNewEntry}>
-        エントリー登録
+      <Button variant="contained" onClick={handleNewTeam}>
+        チーム登録
       </Button>
-      <Button variant="contained" onClick={handleListEntries}>
-        エントリー一覧
+      <Button variant="contained" onClick={handleListTeams}>
+        チーム一覧
       </Button>
     </Stack>
   );
