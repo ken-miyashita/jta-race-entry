@@ -19,13 +19,8 @@ export default function NewTeamForm({ raceId }: NewTeamFormProps) {
 
   const onSubmit: SubmitHandler<TeamFormData> = async (formData) => {
     try {
-      console.log(formData);
-
       const sanitizedFormData = sanitizeTeamFormData(formData);
       const body = { raceId, ...sanitizedFormData };
-
-      console.log(body);
-
       await fetch(`/api/new_team`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },

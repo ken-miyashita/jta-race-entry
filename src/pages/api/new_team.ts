@@ -9,14 +9,9 @@ export default async function handle(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  console.log("handle() req.body=", req.body);
-
   const { raceId, ...formData } = req.body;
   try {
     const extractedTeam = extractTeamFromFormData(formData, raceId);
-
-    console.log("extractedTeam=", extractedTeam);
-
     const result = await prisma.team.create({
       data: extractedTeam,
     });

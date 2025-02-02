@@ -17,7 +17,6 @@ export type RaceTableProps = {
 export default function RaceTable({ races }: RaceTableProps) {
   const router = useRouter();
   const handleClick = (raceId: number) => {
-    console.log(`Clicked raceId: ${raceId}`);
     router.push(`/race/${raceId}`);
   };
   return (
