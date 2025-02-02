@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 import * as React from "react";
 import { Button, Stack } from "@mui/material";
-import { useAuthenticated } from "../lib/useAuthenticated";
+import { useAdmin } from "../lib/useAdmin";
 
 type AdminPortalProps = {
   adminPassword?: string; // サーバーから取得したパスワードの正解値
@@ -11,15 +11,12 @@ type AdminPortalProps = {
 export default function AdminPortalGuarded({
   adminPassword,
 }: AdminPortalProps) {
-  const [isAuthenticated, setIsAuthenticated] = React.useState(false);
-  useAuthenticated(setIsAuthenticated);
+  const [isAdmin, setIsAdmin] = React.useState(false);
+  useAdmin(setIsAdmin);
 
-  if (!isAuthenticated) {
+  if (!isAdmin) {
     return (
-      <PasswordInput
-        adminPassword={adminPassword}
-        setIsAuthenticated={setIsAuthenticated}
-      />
+      <PasswordInput adminPassword={adminPassword} setIsAdmin={setIsAdmin} />
     );
   } else {
     return <AdminPortal />;
@@ -28,10 +25,10 @@ export default function AdminPortalGuarded({
 
 function PasswordInput({
   adminPassword,
-  setIsAuthenticated,
+  setIsAdmin,
 }: {
   adminPassword?: string;
-  setIsAuthenticated: (isAuthenticated: boolean) => void;
+  setIsAdmin: (isAdmin: boolean) => void;
 }) {
   const [password, setPassword] = React.useState("");
   const [error, setError] = React.useState("");
@@ -41,8 +38,8 @@ function PasswordInput({
 
   const handlePasswordSubmit = () => {
     if (password === adminPassword) {
-      sessionStorage.setItem("isAuthenticated", "true");
-      setIsAuthenticated(true);
+      sessionStorage.setItem("isAdmin", "true");
+      setIsAdmin(true);
     } else {
       setError("パスワードが正しくありません");
     }
