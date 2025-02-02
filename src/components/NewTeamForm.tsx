@@ -12,7 +12,7 @@ import { countries } from "../lib/country";
 import { validatePositiveNumber, validateSailNumber } from "../lib/validate";
 import NewPerson from "./NewPerson";
 
-import type { NewTeamFormData } from "../lib/types";
+import type { TeamFormData } from "../lib/types";
 import { sanitizeFormData } from "../lib/sanitize";
 
 export type NewTeamFormProps = {
@@ -28,7 +28,7 @@ export default function NewTeamForm({ raceId }: NewTeamFormProps) {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<NewTeamFormData>({
+  } = useForm<TeamFormData>({
     defaultValues: {
       country: "JPN",
     },
@@ -38,13 +38,10 @@ export default function NewTeamForm({ raceId }: NewTeamFormProps) {
   const handleCrew2Valid = () => {
     setIsCrew2Valid(!isCrew2Valid);
   };
-  const onSubmit: SubmitHandler<NewTeamFormData> = async (formData) => {
+  const onSubmit: SubmitHandler<TeamFormData> = async (formData) => {
     try {
       const sanitizedFormData = sanitizeFormData(formData, isCrew2Valid);
       const body = { raceId, ...sanitizedFormData };
-
-      console.log(body);
-
       await fetch(`/api/new_team`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },

@@ -1,6 +1,6 @@
 import type { Dayjs } from "dayjs";
 
-export type NewTeamFormData = {
+export type TeamFormData = {
   sailNumber: string;
   country: string;
   boatName: string;

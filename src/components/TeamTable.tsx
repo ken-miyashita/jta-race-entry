@@ -8,6 +8,9 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import type { Team, Person } from "@prisma/client";
+import { useAdmin } from "../lib/useAdmin";
+import { Button } from "@mui/material";
+import { useRouter } from "next/navigation";
 
 type TeamWithPersons = Team & {
   persons: Person[];
@@ -18,6 +21,14 @@ export type TeamTableProps = {
 };
 
 export default function TeamTable({ teams }: TeamTableProps) {
+  const router = useRouter();
+  const [isAdmin, setIsAdmin] = React.useState(false);
+  useAdmin(setIsAdmin);
+
+  const handleEditTeam = (teamId: number) => () => {
+    router.push(`/edit_team/${teamId}`);
+  };
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -26,12 +37,14 @@ export default function TeamTable({ teams }: TeamTableProps) {
             <TableCell>セール番号</TableCell>
             <TableCell>国コード</TableCell>
             <TableCell>艇名</TableCell>
+            {isAdmin && <TableCell>ハル重量</TableCell>}
             <TableCell>所属フリート</TableCell>
             <TableCell>活動海域</TableCell>
             <TableCell>スキッパー</TableCell>
             <TableCell>クルー１</TableCell>
             <TableCell>クルー２</TableCell>
-            <TableCell></TableCell>
+            {isAdmin && <TableCell>連絡事項</TableCell>}
+            {isAdmin && <TableCell>操作</TableCell>}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -50,6 +63,7 @@ export default function TeamTable({ teams }: TeamTableProps) {
                 <TableCell>{team.sailNumber}</TableCell>
                 <TableCell>{team.country}</TableCell>
                 <TableCell>{team.boatName}</TableCell>
+                {isAdmin && <TableCell>{team.boatWeight}</TableCell>}
                 <TableCell>{team.fleet}</TableCell>
                 <TableCell>{team.place}</TableCell>
                 <TableCell>
@@ -61,6 +75,17 @@ export default function TeamTable({ teams }: TeamTableProps) {
                 <TableCell>
                   {crew2?.lastName} {crew2?.firstName}
                 </TableCell>
+                {isAdmin && <TableCell>{team.message}</TableCell>}
+                {isAdmin && (
+                  <TableCell>
+                    <Button
+                      variant="contained"
+                      onClick={handleEditTeam(team.id)}
+                    >
+                      編集
+                    </Button>
+                  </TableCell>
+                )}
               </TableRow>
             );
           })}

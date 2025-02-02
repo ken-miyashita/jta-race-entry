@@ -1,11 +1,11 @@
 import { Dayjs } from "dayjs";
-import { NewTeamFormData, NewRaceFormData } from "./types";
+import { TeamFormData, NewRaceFormData } from "./types";
 
 // フォームデータを整形する
 export function sanitizeFormData(
-  formData: NewTeamFormData,
+  formData: TeamFormData,
   isCrew2Valid: boolean
-): NewTeamFormData {
+): TeamFormData {
   if (!isCrew2Valid) {
     formData.crew2_lastName = "";
     formData.crew2_firstName = "";
