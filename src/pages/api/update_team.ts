@@ -9,7 +9,7 @@ export default async function handle(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { raceId, ...formData } = req.body;
+  const formData = req.body;
   try {
     const extractedTeam = extractTeamFromFormData(formData);
     const extractedSkipper = extractPersonFromFormData(
@@ -18,11 +18,6 @@ export default async function handle(
     );
     const extractedCrew1 = extractPersonFromFormData(formData.crew1, "crew1");
     const extractedCrew2 = extractPersonFromFormData(formData.crew2, "crew2");
-
-    console.log("extractedTeam = ", extractedTeam);
-    console.log("extractedSkipper = ", extractedSkipper);
-    console.log("extractedCrew1 = ", extractedCrew1);
-    console.log("extractedCrew2 = ", extractedCrew2);
 
     const resultTeam = await prisma.team.update({
       data: extractedTeam,
@@ -54,19 +49,19 @@ export default async function handle(
 function extractTeamFromFormData(
   formData: EditTeamFormData
 ): Prisma.TeamCreateInput {
-  const { skipper, crew1, crew2, isCrew2Valid, raceId, ...rest } = formData;
+  const {
+    id, // prisma.team.update() の data に渡すときには id は不要
+    createdAt, // prisma.team.update() の data に渡すときには createdAt は不要
+    raceId, // prisma.team.update() の data に渡すときには raceId は不要で race を connect する
+    skipper, // TeamFormData でのみ存在
+    crew1, // TeamFormData でのみ存在
+    crew2, // TeamFormData でのみ存在
+    isCrew2Valid, // TeamFormData でのみ存在
+    ...rest
+  } = formData;
   return {
     ...rest,
     miscInJson: "",
-    persons: {
-      connect: [
-        { id: (skipper as EditPersonFormData).id },
-        { id: (crew1 as EditPersonFormData).id },
-        ...(isCrew2Valid && crew2
-          ? [{ id: (crew2 as EditPersonFormData).id }]
-          : []),
-      ],
-    },
     race: { connect: { id: raceId } },
   };
 }
@@ -76,9 +71,16 @@ function extractPersonFromFormData(
   role: string
 ): any {
   if (!formData) return undefined;
+  const {
+    id, // prisma.person.update() の data に渡すときには id は不要
+    createdAt, // prisma.person.update() の data に渡すときには createdAt は不要
+    teamId, // prisma.person.update() の data に渡すときには teamId は不要で team を connect する
+    ...rest
+  } = formData;
   return {
-    ...formData,
+    ...rest,
     role,
     miscInJson: "",
+    team: { connect: { id: teamId } },
   };
 }
