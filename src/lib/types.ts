@@ -13,6 +13,8 @@ export type NewPersonFormData = PersonFormData;
 
 export type EditPersonFormData = PersonFormData & {
   id: number;
+  teamId: number;
+  createdAt: string;
 };
 
 // Team データのうち、UI で編集可能なもの（新規作成時も含めて）を抜き出したもの。
@@ -36,6 +38,7 @@ export type NewTeamFormData = TeamFormData;
 export type EditTeamFormData = TeamFormData & {
   id: number;
   raceId: number;
+  createdAt: string;
 };
 
 // Race データのうち、UI で編集可能なもの（新規作成時も含めて）を抜き出したもの。

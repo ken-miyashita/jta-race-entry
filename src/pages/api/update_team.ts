@@ -10,18 +10,28 @@ export default async function handle(
   res: NextApiResponse
 ) {
   const formData = req.body;
+  const teamId = formData.id;
   try {
     const extractedTeam = extractTeamFromFormData(formData);
     const extractedSkipper = extractPersonFromFormData(
       formData.skipper,
+      teamId,
       "skipper"
     );
-    const extractedCrew1 = extractPersonFromFormData(formData.crew1, "crew1");
-    const extractedCrew2 = extractPersonFromFormData(formData.crew2, "crew2");
+    const extractedCrew1 = extractPersonFromFormData(
+      formData.crew1,
+      teamId,
+      "crew1"
+    );
+    const extractedCrew2 = extractPersonFromFormData(
+      formData.crew2,
+      teamId,
+      "crew2"
+    );
 
     const resultTeam = await prisma.team.update({
       data: extractedTeam,
-      where: { id: formData.id },
+      where: { id: teamId },
     });
     const resultSkipper = await prisma.person.update({
       data: extractedSkipper,
@@ -31,12 +41,27 @@ export default async function handle(
       data: extractedCrew1,
       where: { id: formData.crew1.id },
     });
-    const resultCrew2 = extractedCrew2
-      ? await prisma.person.update({
+    let resultCrew2;
+    if (formData.isCrew2Valid) {
+      if (formData.crew2.id) {
+        // 既存の crew2 を更新する
+        resultCrew2 = await prisma.person.update({
           data: extractedCrew2,
           where: { id: formData.crew2.id },
-        })
-      : {};
+        });
+      } else {
+        // 新規に crew2 を作る
+        resultCrew2 = await prisma.person.create({
+          data: extractedCrew2,
+        });
+      }
+    } else {
+      // チェックボックスで crew2 を無効にした場合は、既存の crew2 を削除する
+      resultCrew2 = await prisma.person.deleteMany({
+        where: { teamId: teamId, role: "crew2" },
+      });
+    }
+
     return res
       .status(201)
       .json({ resultTeam, resultSkipper, resultCrew1, resultCrew2 });
@@ -68,13 +93,14 @@ function extractTeamFromFormData(
 
 function extractPersonFromFormData(
   formData: EditPersonFormData,
+  teamId: number,
   role: string
 ): any {
   if (!formData) return undefined;
   const {
     id, // prisma.person.update() の data に渡すときには id は不要
     createdAt, // prisma.person.update() の data に渡すときには createdAt は不要
-    teamId, // prisma.person.update() の data に渡すときには teamId は不要で team を connect する
+    teamId: teamIdInPersonFormData, // 新規に crew2 を作ったときには teamId がここでは指定されていないので引数として渡す
     ...rest
   } = formData;
   return {

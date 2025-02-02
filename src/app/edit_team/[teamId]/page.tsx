@@ -38,8 +38,10 @@ function convertTeamToFormData(
   const crew1 = persons.find((p) => p.role === "crew1")!;
   const crew2 = persons.find((p) => p.role === "crew2");
   const isCrew2Valid = !!crew2;
+  const createdAt = team.createdAt.toISOString();
   return {
     ...rest,
+    createdAt,
     skipper,
     crew1,
     crew2,
