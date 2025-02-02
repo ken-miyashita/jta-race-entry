@@ -34,6 +34,15 @@ function PasswordInput({
   const [password, setPassword] = React.useState("");
   const [error, setError] = React.useState("");
 
+  // 一度正しいパスワードを入力したら、それ以降はチェックしない。
+  // こうしないと、ブラウザのバックボタンで戻ってきたときに、毎回パスワード入力を求められる。
+  React.useEffect(() => {
+    const isAuthenticated = sessionStorage.getItem("isAuthenticated");
+    if (isAuthenticated === "true") {
+      setIsPasswordCorrect(true);
+    }
+  }, [setIsPasswordCorrect]);
+
   const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
   };
