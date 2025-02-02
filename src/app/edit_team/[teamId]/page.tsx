@@ -21,8 +21,6 @@ export default async function EditTeam(props: { params: Promise<PageParams> }) {
   if (!team) notFound();
   const initialFormData = convertTeamToFormData(team);
 
-  console.log("edit_team/[teamId]/page:  initialFormData=", initialFormData);
-
   return (
     <div>
       <EditTeamForm initialFormData={initialFormData} />
