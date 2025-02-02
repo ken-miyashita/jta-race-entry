@@ -2,6 +2,7 @@
 import { useRouter } from "next/navigation";
 import * as React from "react";
 import { Button, Stack } from "@mui/material";
+import { useAuthenticated } from "../lib/useAuthenticated";
 
 type AdminPortalProps = {
   adminPassword?: string; // サーバーから取得したパスワードの正解値
@@ -10,13 +11,14 @@ type AdminPortalProps = {
 export default function AdminPortalGuarded({
   adminPassword,
 }: AdminPortalProps) {
-  const [isPasswordCorrect, setIsPasswordCorrect] = React.useState(false);
+  const [isAuthenticated, setIsAuthenticated] = React.useState(false);
+  useAuthenticated(setIsAuthenticated);
 
-  if (!isPasswordCorrect) {
+  if (!isAuthenticated) {
     return (
       <PasswordInput
         adminPassword={adminPassword}
-        setIsPasswordCorrect={setIsPasswordCorrect}
+        setIsAuthenticated={setIsAuthenticated}
       />
     );
   } else {
@@ -26,31 +28,21 @@ export default function AdminPortalGuarded({
 
 function PasswordInput({
   adminPassword,
-  setIsPasswordCorrect,
+  setIsAuthenticated,
 }: {
   adminPassword?: string;
-  setIsPasswordCorrect: (isPasswordCorrect: boolean) => void;
+  setIsAuthenticated: (isAuthenticated: boolean) => void;
 }) {
   const [password, setPassword] = React.useState("");
   const [error, setError] = React.useState("");
-
-  // 一度正しいパスワードを入力したら、それ以降はチェックしない。
-  // こうしないと、ブラウザのバックボタンで戻ってきたときに、毎回パスワード入力を求められる。
-  React.useEffect(() => {
-    const isAuthenticated = sessionStorage.getItem("isAuthenticated");
-    if (isAuthenticated === "true") {
-      setIsPasswordCorrect(true);
-    }
-  }, [setIsPasswordCorrect]);
-
   const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
   };
 
   const handlePasswordSubmit = () => {
     if (password === adminPassword) {
-      setIsPasswordCorrect(true);
       sessionStorage.setItem("isAuthenticated", "true");
+      setIsAuthenticated(true);
     } else {
       setError("パスワードが正しくありません");
     }
