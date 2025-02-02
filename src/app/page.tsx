@@ -1,18 +1,12 @@
 import AdminPortal from "../components/AdminPortal";
 
-type PageParams = {
-  adminPassword: string;
-};
-
-export default async function Home(props: { params: Promise<PageParams> }) {
-  const params = await props.params;
-  const adminPassword = params.adminPassword;
-
-  console.log(adminPassword);
+export default async function Home() {
+  // 環境変数からパスワードを取得
+  const adminPassword = process.env.ADMIN_PASSWORD;
 
   return (
     <div>
-      <AdminPortal />
+      <AdminPortal adminPassword={adminPassword} />
     </div>
   );
 }
