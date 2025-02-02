@@ -1,63 +1,47 @@
 import type { Dayjs } from "dayjs";
+import type { Prisma } from "@prisma/client";
 
-export type TeamFormData = {
-  sailNumber: string;
-  country: string;
-  boatName: string;
-  boatWeight: number;
-  fleet: string;
-  place: string;
-  message: string;
+// Person データのうち、UI で編集可能なもの（新規作成時も含めて）を抜き出したもの。
+export type PersonFormData = Omit<
+  Prisma.PersonCreateInput,
+  "id" | "team" | "teamId" | "createdAt"
+>;
 
-  // Person のデータは skipper_xxx, crew1_xxx, crew2_xxx という形式の属性で保持する。
-  // これは、react-hook-form の register() 関数に渡す name 属性として使うため。
-  skipper_lastName: string;
-  skipper_firstName: string;
-  skipper_lastNameRomaji: string;
-  skipper_firstNameRomaji: string;
-  skipper_role: "skipper" | "crew1" | "crew2";
-  skipper_jsafId: string;
-  skipper_jta: boolean;
-  skipper_birthDay?: Dayjs | string;
-  skipper_sex: "male" | "female";
-  skipper_address: string;
-  skipper_eMail: string;
-  skipper_phone: string;
-  skipper_fax: string;
+export type NewPersonFormData = PersonFormData;
 
-  crew1_lastName: string;
-  crew1_firstName: string;
-  crew1_lastNameRomaji: string;
-  crew1_firstNameRomaji: string;
-  crew1_role: "skipper" | "crew1" | "crew2";
-  crew1_jsafId: string;
-  crew1_jta: boolean;
-  crew1_birthDay?: Dayjs | string;
-  crew1_sex: "male" | "female";
-  crew1_address: string;
-  crew1_eMail: string;
-  crew1_phone: string;
-  crew1_fax: string;
-
-  crew2_lastName: string;
-  crew2_firstName: string;
-  crew2_lastNameRomaji: string;
-  crew2_firstNameRomaji: string;
-  crew2_role: "skipper" | "crew1" | "crew2";
-  crew2_jsafId: string;
-  crew2_jta: boolean;
-  crew2_birthDay?: Dayjs | string;
-  crew2_sex: "male" | "female";
-  crew2_address: string;
-  crew2_eMail: string;
-  crew2_phone: string;
-  crew2_fax: string;
+export type EditPersonFormData = PersonFormData & {
+  id: number;
 };
 
-export type NewRaceFormData = {
-  name: string;
-  mailFrom: string;
-  mailBcc: string;
-  startDate?: Dayjs | string;
-  endDate?: Dayjs | string;
+// Team データのうち、UI で編集可能なもの（新規作成時も含めて）を抜き出したもの。
+// skipper, crew1 を必須とする。
+// crew2 のデータが有効かは、isCrew2Valid（UIとしてはチェックボックス）で管理する。
+// UI では一時的に crew2 データを入力したりもできるので、最終的にはチェックボックスの値をもとに
+// データを保存する。
+export type TeamFormData = Omit<
+  Prisma.TeamCreateInput,
+  "id" | "persons" | "race" | "createdAt"
+> & {
+  skipper: PersonFormData;
+  crew1: PersonFormData;
+  crew2: PersonFormData;
+  isCrew2Valid: boolean;
+};
+
+export type NewTeamFormData = TeamFormData;
+
+export type EditTeamFormData = TeamFormData & {
+  id: number;
+};
+
+// Race データのうち、UI で編集可能なもの（新規作成時も含めて）を抜き出したもの。
+export type RaceFormData = Omit<
+  Prisma.RaceCreateInput,
+  "id" | "teams" | "createdAt"
+>;
+
+export type NewRaceFormData = RaceFormData;
+
+export type EditRaceFormData = RaceFormData & {
+  id: number;
 };

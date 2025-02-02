@@ -12,7 +12,7 @@ import {
   validatePhoneNumber,
 } from "../lib/validate";
 
-interface NewPersonProps {
+interface PersonFormProps {
   register: any; // react-hook-form の useForm() が返す register 関数
   errors: FieldErrors<FieldValues>; // react-hook-form の useForm() が返す errors
   control: any; // react-hook-form の useForm() が返す control オブジェクト
@@ -20,33 +20,33 @@ interface NewPersonProps {
   required: boolean;
 }
 
-export default function NewPerson({
+export default function PersonForm({
   register,
   errors,
   control,
   roleName,
   required,
-}: NewPersonProps) {
+}: PersonFormProps) {
   return (
     <Stack component="div" spacing={2} sx={{ m: 2, width: "25ch" }}>
       <TextField
         register={register}
         errors={errors}
-        registerName={`${roleName}_lastName`}
+        registerName={`${roleName}.lastName`}
         registerOptions={required ? { required: "必須項目です" } : {}}
         label="姓"
       />
       <TextField
         register={register}
         errors={errors}
-        registerName={`${roleName}_firstName`}
+        registerName={`${roleName}.firstName`}
         registerOptions={required ? { required: "必須項目です" } : {}}
         label="名"
       />
       <TextField
         register={register}
         errors={errors}
-        registerName={`${roleName}_lastNameRomaji`}
+        registerName={`${roleName}.lastNameRomaji`}
         registerOptions={{
           validate: validateAlphabets,
           required: required ? "必須項目です" : undefined,
@@ -56,7 +56,7 @@ export default function NewPerson({
       <TextField
         register={register}
         errors={errors}
-        registerName={`${roleName}_firstNameRomaji`}
+        registerName={`${roleName}.firstNameRomaji`}
         registerOptions={{
           validate: validateAlphabets,
           required: required ? "必須項目です" : undefined,
@@ -66,13 +66,13 @@ export default function NewPerson({
       <TextField
         register={register}
         errors={errors}
-        registerName={`${roleName}_jsafId`}
+        registerName={`${roleName}.jsafId`}
         label="JSAF ID"
       />
       <Select
         register={register}
         errors={errors}
-        registerName={`${roleName}_jta`}
+        registerName={`${roleName}.jta`}
         registerOptions={{ setValueAs: (value: string) => value === "yes" }}
         label="JTA 会員"
         options={[
@@ -82,14 +82,14 @@ export default function NewPerson({
       />
       <DatePicker
         control={control}
-        registerName={`${roleName}_birthDay`}
+        registerName={`${roleName}.birthDay`}
         registerOptions={required ? { required: "必須項目です" } : {}}
         label="生年月日"
       />
       <Select
         register={register}
         errors={errors}
-        registerName={`${roleName}_sex`}
+        registerName={`${roleName}.sex`}
         label="性別"
         options={[
           { value: "male", label: "男性" },
@@ -99,14 +99,14 @@ export default function NewPerson({
       <TextField
         register={register}
         errors={errors}
-        registerName={`${roleName}_address`}
+        registerName={`${roleName}.address`}
         registerOptions={required ? { required: "必須項目です" } : {}}
         label="住所"
       />
       <TextField
         register={register}
         errors={errors}
-        registerName={`${roleName}_eMail`}
+        registerName={`${roleName}.eMail`}
         registerOptions={{
           validate: validateEmail,
           required: required ? "必須項目です" : undefined,
@@ -116,7 +116,7 @@ export default function NewPerson({
       <TextField
         register={register}
         errors={errors}
-        registerName={`${roleName}_phone`}
+        registerName={`${roleName}.phone`}
         registerOptions={{
           validate: validatePhoneNumber,
           required: required ? "必須項目です" : undefined,
@@ -126,7 +126,7 @@ export default function NewPerson({
       <TextField
         register={register}
         errors={errors}
-        registerName={`${roleName}_fax`}
+        registerName={`${roleName}.fax`}
         registerOptions={{
           validate: validatePhoneNumber,
         }}
