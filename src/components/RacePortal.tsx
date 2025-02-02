@@ -2,7 +2,6 @@
 import { useRouter } from "next/navigation";
 import * as React from "react";
 import { Button, Stack } from "@mui/material";
-import Race from "../app/race/[raceId]/page";
 
 export type RacePortalProps = {
   raceId: number;

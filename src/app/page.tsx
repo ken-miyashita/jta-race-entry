@@ -1,7 +1,18 @@
-import prisma from "../lib/prisma";
-import RaceTable from "../components/RaceTable";
+import AdminPortal from "../components/AdminPortal";
 
-export default async function Home() {
-  const races = await prisma.race.findMany({});
-  return <RaceTable races={races} />;
+type PageParams = {
+  adminPassword: string;
+};
+
+export default async function Home(props: { params: Promise<PageParams> }) {
+  const params = await props.params;
+  const adminPassword = params.adminPassword;
+
+  console.log(adminPassword);
+
+  return (
+    <div>
+      <AdminPortal />
+    </div>
+  );
 }

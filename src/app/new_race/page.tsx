@@ -1,6 +1,5 @@
 import React from "react";
-import prisma from "../../../lib/prisma";
-import NewRaceForm from "../../../components/NewRaceForm";
+import NewRaceForm from "../../components/NewRaceForm";
 
 export default async function NewRace() {
   return (
