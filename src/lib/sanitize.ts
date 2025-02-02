@@ -1,48 +1,35 @@
 import { Dayjs } from "dayjs";
-import { TeamFormData, NewRaceFormData } from "./types";
+import { TeamFormData, NewRaceFormData, PersonFormData } from "./types";
 
 // フォームデータを整形する
-export function sanitizeFormData(
-  formData: TeamFormData,
-  isCrew2Valid: boolean
-): TeamFormData {
-  if (!isCrew2Valid) {
-    formData.crew2_lastName = "";
-    formData.crew2_firstName = "";
-    formData.crew2_lastNameRomaji = "";
-    formData.crew2_firstNameRomaji = "";
-    formData.crew2_role = "crew2";
-    formData.crew2_jsafId = "";
-    formData.crew2_jta = false;
-    formData.crew2_birthDay = "";
-    formData.crew2_sex = "male";
-    formData.crew2_address = "";
-    formData.crew2_eMail = "";
-    formData.crew2_phone = "";
-    formData.crew2_fax = "";
+export function sanitizeTeamFormData(formData: TeamFormData): TeamFormData {
+  if (!formData.isCrew2Valid) {
+    formData.crew2 = undefined;
   }
   return {
     ...formData,
     sailNumber: sanitizeString(formData.sailNumber),
     boatWeight: sanitizeNumber(formData.boatWeight),
+    skipper: sanitizePersonFormData(formData.skipper),
+    crew1: sanitizePersonFormData(formData.crew1),
+    crew2: formData.crew2 ? sanitizePersonFormData(formData.crew2) : undefined,
+  };
+}
 
-    skipper_jsafId: sanitizeString(formData.skipper_jsafId),
-    skipper_birthDay: sanitizeDate(formData.skipper_birthDay),
-    skipper_eMail: sanitizeString(formData.skipper_eMail),
-    skipper_phone: sanitizeString(formData.skipper_phone),
-    skipper_fax: sanitizeString(formData.skipper_fax),
-
-    crew1_jsafId: sanitizeString(formData.crew1_jsafId),
-    crew1_birthDay: sanitizeDate(formData.crew1_birthDay),
-    crew1_eMail: sanitizeString(formData.crew1_eMail),
-    crew1_phone: sanitizeString(formData.crew1_phone),
-    crew1_fax: sanitizeString(formData.crew1_fax),
-
-    crew2_jsafId: sanitizeString(formData.crew2_jsafId),
-    crew2_birthDay: sanitizeDate(formData.crew2_birthDay),
-    crew2_eMail: sanitizeString(formData.crew2_eMail),
-    crew2_phone: sanitizeString(formData.crew2_phone),
-    crew2_fax: sanitizeString(formData.crew2_fax),
+function sanitizePersonFormData(formData: PersonFormData): PersonFormData {
+  return {
+    ...formData,
+    lastName: sanitizeString(formData.lastName),
+    firstName: sanitizeString(formData.firstName),
+    lastNameRomaji: sanitizeString(formData.lastNameRomaji),
+    firstNameRomaji: sanitizeString(formData.firstNameRomaji),
+    jsafId: sanitizeString(formData.jsafId),
+    birthDay: sanitizeDate(formData.birthDay),
+    sex: sanitizeString(formData.sex),
+    address: sanitizeString(formData.address),
+    eMail: sanitizeString(formData.eMail),
+    phone: sanitizeString(formData.phone),
+    fax: sanitizeString(formData.fax),
   };
 }
 
@@ -50,6 +37,7 @@ export function sanitizeRaceFormData(
   formData: NewRaceFormData
 ): NewRaceFormData {
   return {
+    ...formData,
     name: sanitizeString(formData.name),
     mailFrom: sanitizeString(formData.mailFrom),
     mailBcc: sanitizeString(formData.mailBcc),

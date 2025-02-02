@@ -5,7 +5,7 @@ import { SubmitHandler } from "react-hook-form";
 import * as React from "react";
 
 import type { TeamFormData } from "../lib/types";
-import { sanitizeFormData } from "../lib/sanitize";
+import { sanitizeTeamFormData } from "../lib/sanitize";
 
 export type NewTeamFormProps = {
   raceId: number;
@@ -18,19 +18,23 @@ export default function NewTeamForm({ raceId }: NewTeamFormProps) {
   const router = useRouter();
 
   const onSubmit: SubmitHandler<TeamFormData> = async (formData) => {
-    console.log(formData);
-    // try {
-    //   const sanitizedFormData = sanitizeFormData(formData);
-    //   const body = { raceId, ...sanitizedFormData };
-    //   await fetch(`/api/new_team`, {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify(body),
-    //   });
-    // } catch (error) {
-    //   console.error(error);
-    // }
-    // router.push(`/race/${raceId}`);
+    try {
+      console.log(formData);
+
+      const sanitizedFormData = sanitizeTeamFormData(formData);
+      const body = { raceId, ...sanitizedFormData };
+
+      console.log(body);
+
+      await fetch(`/api/new_team`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+    } catch (error) {
+      console.error(error);
+    }
+    router.push(`/race/${raceId}`);
   };
   return (
     <div>

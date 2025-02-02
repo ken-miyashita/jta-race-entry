@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { Prisma } from "@prisma/client";
 import prisma from "../../lib/prisma";
+import { PersonFormData, TeamFormData } from "../../lib/types";
 
 // POST /api/new_team
 // Required fields in body: {raceId, ...formData}
@@ -8,9 +9,14 @@ export default async function handle(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  console.log("handle() req.body=", req.body);
+
   const { raceId, ...formData } = req.body;
   try {
     const extractedTeam = extractTeamFromFormData(formData, raceId);
+
+    console.log("extractedTeam=", extractedTeam);
+
     const result = await prisma.team.create({
       data: extractedTeam,
     });
@@ -22,44 +28,33 @@ export default async function handle(
 }
 
 function extractTeamFromFormData(
-  formData: any,
+  formData: TeamFormData,
   raceId: number
 ): Prisma.TeamCreateInput {
+  const { skipper, crew1, crew2, isCrew2Valid, ...rest } = formData;
   return {
-    sailNumber: formData.sailNumber,
-    country: formData.country,
-    boatName: formData.boatName,
-    boatWeight: formData.boatWeight,
-    fleet: formData.fleet,
-    place: formData.place,
-    message: formData.message,
+    ...rest,
     miscInJson: "",
     persons: {
       create: [
-        extractPersonFromFormData(formData, "skipper"),
-        extractPersonFromFormData(formData, "crew1"),
-        extractPersonFromFormData(formData, "crew2"),
+        extractPersonFromFormData(skipper, "skipper"),
+        extractPersonFromFormData(crew1, "crew1"),
+        ...(isCrew2Valid && crew2
+          ? [extractPersonFromFormData(crew2!, "crew2")]
+          : []),
       ],
     },
     race: { connect: { id: raceId } },
   };
 }
 
-function extractPersonFromFormData(formData: any, role: string): any {
+function extractPersonFromFormData(
+  formData: PersonFormData,
+  role: string
+): any {
   return {
-    lastName: formData[`${role}_lastName`],
-    firstName: formData[`${role}_firstName`],
-    lastNameRomaji: formData[`${role}_lastNameRomaji`],
-    firstNameRomaji: formData[`${role}_firstNameRomaji`],
-    role: role,
-    jsafId: formData[`${role}_jsafId`],
-    jta: formData[`${role}_jta`],
-    birthDay: formData[`${role}_birthDay`],
-    sex: formData[`${role}_sex`],
-    address: formData[`${role}_address`],
-    eMail: formData[`${role}_eMail`],
-    phone: formData[`${role}_phone`],
-    fax: formData[`${role}_fax`],
+    ...formData,
+    role,
     miscInJson: "",
   };
 }
