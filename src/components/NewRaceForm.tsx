@@ -22,10 +22,7 @@ export default function NewRaceForm() {
 
   const onSubmit: SubmitHandler<NewRaceFormData> = async (formData) => {
     try {
-      console.log(formData);
       const sanitizedFormData = sanitizeRaceFormData(formData);
-      console.log(sanitizedFormData);
-
       await fetch(`/api/new_race`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
