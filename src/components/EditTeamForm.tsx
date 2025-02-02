@@ -1,31 +1,24 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { SubmitHandler } from "react-hook-form";
+
 import * as React from "react";
-import type { Team } from "@prisma/client";
-import { TeamFormData } from "../lib/types";
-import { sanitizeFormData } from "../lib/sanitize";
+
+import { EditTeamFormData, TeamFormData } from "../lib/types";
+import { sanitizeTeamFormData } from "../lib/sanitize";
 
 export type EditTeamFormProps = {
-  team: Team;
+  initialFormData: EditTeamFormData;
 };
 
-export default function EditTeamForm({ team }: EditTeamFormProps) {
+import TeamForm from "./TeamForm";
+
+export default function EditTeamForm({ initialFormData }: EditTeamFormProps) {
   const router = useRouter();
-  const {
-    register,
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<TeamFormData>({
-    defaultValues: {
-      ...team,
-    },
-  });
 
   const onSubmit: SubmitHandler<TeamFormData> = async (formData) => {
     try {
-      const sanitizedFormData = sanitizeFormData(formData, true);
+      const sanitizedFormData = sanitizeTeamFormData(formData);
       await fetch(`/api/update_team`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -34,8 +27,13 @@ export default function EditTeamForm({ team }: EditTeamFormProps) {
     } catch (error) {
       console.error(error);
     }
-    router.push(`/race/${team.raceId}`);
+    router.push(`/race/${initialFormData.raceId}`);
   };
 
-  return <div>{team.sailNumber}</div>;
+  return (
+    <div>
+      <h2>エントリー編集</h2>
+      <TeamForm onSubmit={onSubmit} initialFormData={initialFormData} />
+    </div>
+  );
 }

@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 
 import * as React from "react";
 import { Button, Stack, FormControlLabel, Checkbox } from "@mui/material";
+import dayjs from "dayjs";
 
 import PersonForm from "./PersonForm";
 import TextField from "./TextField";
@@ -22,6 +23,7 @@ export type TeamFormProps = {
 };
 
 export default function TeamForm({ initialFormData, onSubmit }: TeamFormProps) {
+  const tweakedInitialFormData = tweakFormData(initialFormData);
   const {
     register,
     control,
@@ -31,12 +33,16 @@ export default function TeamForm({ initialFormData, onSubmit }: TeamFormProps) {
   } = useForm<TeamFormData>({
     defaultValues: {
       country: "JPN",
-      ...initialFormData,
+      ...tweakedInitialFormData,
     },
   });
 
   // チェックボックスの値を監視して、crew2 用の UI を表示するかどうかを決める。
   const isCrew2Valid = watch("isCrew2Valid");
+
+  // debug!!!
+  const watchedData = watch();
+  console.log("watchedData = ", watchedData);
 
   return (
     <Stack
@@ -135,4 +141,29 @@ export default function TeamForm({ initialFormData, onSubmit }: TeamFormProps) {
       </Button>
     </Stack>
   );
+}
+
+// 日付データを Dayjs に変換する。
+function tweakFormData(formData: TeamFormData) {
+  const { skipper, crew1, crew2, ...rest } = formData;
+  const tweakedSkipper = {
+    ...skipper,
+    birthDay: skipper.birthDay ? dayjs(skipper.birthDay) : null,
+  };
+  const tweakedCrew1 = {
+    ...crew1,
+    birthDay: crew1.birthDay ? dayjs(crew1.birthDay) : null,
+  };
+  const tweakedCrew2 = crew2
+    ? {
+        ...crew2,
+        birthDay: crew2.birthDay ? dayjs(crew2.birthDay) : null,
+      }
+    : undefined;
+  return {
+    ...rest,
+    skipper: tweakedSkipper,
+    crew1: tweakedCrew1,
+    crew2: tweakedCrew2,
+  };
 }

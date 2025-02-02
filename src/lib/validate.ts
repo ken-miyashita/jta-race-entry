@@ -13,7 +13,10 @@ export function validateSailNumber(value: string) {
 }
 
 //
-export function validatePositiveNumber(value: string) {
+export function validatePositiveNumber(value: string | number) {
+  if (typeof value === "number") {
+    return true;
+  }
   const numString = sanitizeZenkaku(value);
   const invalidCharacter = checkValidCharacters(numString, "0-9.");
   if (invalidCharacter) {

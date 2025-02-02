@@ -4,8 +4,10 @@ import type { Prisma } from "@prisma/client";
 // Person データのうち、UI で編集可能なもの（新規作成時も含めて）を抜き出したもの。
 export type PersonFormData = Omit<
   Prisma.PersonCreateInput,
-  "id" | "team" | "teamId" | "role" | "createdAt"
->;
+  "id" | "birthDay" | "team" | "teamId" | "role" | "createdAt"
+> & {
+  birthDay: string | Dayjs | null;
+};
 
 export type NewPersonFormData = PersonFormData;
 
@@ -33,6 +35,7 @@ export type NewTeamFormData = TeamFormData;
 
 export type EditTeamFormData = TeamFormData & {
   id: number;
+  raceId: number;
 };
 
 // Race データのうち、UI で編集可能なもの（新規作成時も含めて）を抜き出したもの。

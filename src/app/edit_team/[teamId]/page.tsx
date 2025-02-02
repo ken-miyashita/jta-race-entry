@@ -2,6 +2,8 @@ import React from "react";
 import { notFound } from "next/navigation";
 import prisma from "../../../lib/prisma";
 import EditTeamForm from "../../../components/EditTeamForm";
+import { EditTeamFormData } from "../../../lib/types";
+import { Person, Team } from "@prisma/client";
 
 type PageParams = {
   teamId: number;
@@ -17,10 +19,30 @@ export default async function EditTeam(props: { params: Promise<PageParams> }) {
   });
 
   if (!team) notFound();
+  const initialFormData = convertTeamToFormData(team);
+
+  console.log("edit_team/[teamId]/page:  initialFormData=", initialFormData);
 
   return (
     <div>
-      <EditTeamForm team={team} />
+      <EditTeamForm initialFormData={initialFormData} />
     </div>
   );
+}
+
+function convertTeamToFormData(
+  team: Team & { persons: Person[] }
+): EditTeamFormData {
+  const { persons, ...rest } = team;
+  const skipper = persons.find((p) => p.role === "skipper")!;
+  const crew1 = persons.find((p) => p.role === "crew1")!;
+  const crew2 = persons.find((p) => p.role === "crew2");
+  const isCrew2Valid = !!crew2;
+  return {
+    ...rest,
+    skipper,
+    crew1,
+    crew2,
+    isCrew2Valid,
+  };
 }

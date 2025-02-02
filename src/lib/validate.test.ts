@@ -50,6 +50,9 @@ describe("validatePositiveNumber", () => {
   it("負の整数（全角）なので不正", () => {
     expect(validatePositiveNumber("ー７８９")).not.toBe(true);
   });
+  it("数値は正しい", () => {
+    expect(validatePositiveNumber(123)).toBe(true);
+  });
 });
 
 describe("validateAlphabets", () => {
