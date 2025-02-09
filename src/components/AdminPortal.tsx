@@ -11,10 +11,12 @@ type AdminPortalProps = {
 export default function AdminPortalGuarded({
   adminPassword,
 }: AdminPortalProps) {
-  const [isAdmin, setIsAdmin] = React.useState(false);
+  const [isAdmin, setIsAdmin] = React.useState<boolean | undefined>(undefined);
   useAdmin(setIsAdmin);
 
-  if (!isAdmin) {
+  if (isAdmin === undefined) {
+    return <p>...</p>;
+  } else if (!isAdmin) {
     return (
       <PasswordInput adminPassword={adminPassword} setIsAdmin={setIsAdmin} />
     );

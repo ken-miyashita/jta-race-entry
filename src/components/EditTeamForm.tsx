@@ -6,7 +6,7 @@ import * as React from "react";
 
 import { EditTeamFormData, TeamFormData } from "../lib/types";
 import { sanitizeTeamFormData } from "../lib/sanitize";
-
+import { useAdmin } from "../lib/useAdmin";
 export type EditTeamFormProps = {
   initialFormData: EditTeamFormData;
 };
@@ -15,6 +15,14 @@ import TeamForm from "./TeamForm";
 
 export default function EditTeamForm({ initialFormData }: EditTeamFormProps) {
   const router = useRouter();
+
+  const [isAdmin, setIsAdmin] = React.useState<boolean | undefined>(undefined);
+  useAdmin(setIsAdmin);
+  if (isAdmin === undefined) {
+    return <p></p>;
+  } else if (!isAdmin) {
+    return <p>このページは管理者のみが閲覧できます。</p>;
+  }
 
   const onSubmit: SubmitHandler<TeamFormData> = async (formData) => {
     try {
