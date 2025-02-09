@@ -39,7 +39,7 @@ export default function EditTeamForm({ initialFormData }: EditTeamFormProps) {
   }
   return (
     <div>
-      <h2>エントリー編集</h2>
+      <h2>チーム編集（管理者モード）</h2>
       <TeamForm onSubmit={onSubmit} initialFormData={initialFormData} />
     </div>
   );

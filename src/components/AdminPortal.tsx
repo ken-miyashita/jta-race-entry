@@ -68,6 +68,7 @@ function AdminPortal() {
 
   return (
     <Stack spacing={2} sx={{ m: 2, width: "25ch" }}>
+      <h1>管理者ポータル</h1>
       <Button variant="contained" onClick={handleNewRace}>
         レース新規作成
       </Button>

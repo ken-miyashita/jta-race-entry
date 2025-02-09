@@ -24,10 +24,5 @@ export default async function ListTeams(props: {
     include: { persons: true },
   });
 
-  return (
-    <div>
-      <h1>{race.name}</h1>
-      <TeamTable teams={teams} />
-    </div>
-  );
+  return <TeamTable raceName={race.name} teams={teams} />;
 }

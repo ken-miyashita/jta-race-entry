@@ -52,7 +52,7 @@ export default function NewRaceForm() {
       spacing={2}
       sx={{ m: 2, width: "25ch" }}
     >
-      <h1>新規レース作成</h1>
+      <h2>新規レース作成（管理者モード）</h2>
       <TextField
         register={register}
         errors={errors}
