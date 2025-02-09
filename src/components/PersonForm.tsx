@@ -17,7 +17,6 @@ interface PersonFormProps {
   errors: FieldErrors<FieldValues>; // react-hook-form の useForm() が返す errors
   control: any; // react-hook-form の useForm() が返す control オブジェクト
   roleName: string; // 'skipper' | 'crew1' | 'crew2'
-  required: boolean;
 }
 
 export default function PersonForm({
@@ -25,22 +24,21 @@ export default function PersonForm({
   errors,
   control,
   roleName,
-  required,
 }: PersonFormProps) {
   return (
-    <Stack component="div" spacing={2} sx={{ m: 2, width: "25ch" }}>
+    <>
       <TextField
         register={register}
         errors={errors}
         registerName={`${roleName}.lastName`}
-        registerOptions={required ? { required: "必須項目です" } : {}}
+        registerOptions={{ required: "必須項目です" }}
         label="姓"
       />
       <TextField
         register={register}
         errors={errors}
         registerName={`${roleName}.firstName`}
-        registerOptions={required ? { required: "必須項目です" } : {}}
+        registerOptions={{ required: "必須項目です" }}
         label="名"
       />
       <TextField
@@ -49,7 +47,7 @@ export default function PersonForm({
         registerName={`${roleName}.lastNameRomaji`}
         registerOptions={{
           validate: validateAlphabets,
-          required: required ? "必須項目です" : undefined,
+          required: "必須項目です",
         }}
         label="姓（ローマ字）"
       />
@@ -59,7 +57,7 @@ export default function PersonForm({
         registerName={`${roleName}.firstNameRomaji`}
         registerOptions={{
           validate: validateAlphabets,
-          required: required ? "必須項目です" : undefined,
+          required: "必須項目です",
         }}
         label="名（ローマ字）"
       />
@@ -83,7 +81,7 @@ export default function PersonForm({
       <DatePicker
         control={control}
         registerName={`${roleName}.birthDay`}
-        registerOptions={required ? { required: "必須項目です" } : {}}
+        registerOptions={{ required: "必須項目です" }}
         label="生年月日"
       />
       <Select
@@ -100,7 +98,7 @@ export default function PersonForm({
         register={register}
         errors={errors}
         registerName={`${roleName}.address`}
-        registerOptions={required ? { required: "必須項目です" } : {}}
+        registerOptions={{ required: "必須項目です" }}
         label="住所"
       />
       <TextField
@@ -109,7 +107,7 @@ export default function PersonForm({
         registerName={`${roleName}.eMail`}
         registerOptions={{
           validate: validateEmail,
-          required: required ? "必須項目です" : undefined,
+          required: "必須項目です",
         }}
         label="メールアドレス"
       />
@@ -119,7 +117,7 @@ export default function PersonForm({
         registerName={`${roleName}.phone`}
         registerOptions={{
           validate: validatePhoneNumber,
-          required: required ? "必須項目です" : undefined,
+          required: "必須項目です",
         }}
         label="電話番号"
       />
@@ -132,6 +130,6 @@ export default function PersonForm({
         }}
         label="FAX"
       />
-    </Stack>
+    </>
   );
 }

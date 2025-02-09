@@ -109,7 +109,6 @@ export default function TeamForm({ initialFormData, onSubmit }: TeamFormProps) {
         errors={errors}
         control={control}
         roleName="skipper"
-        required
       />
       <h3>クルー１</h3>
       <PersonForm
@@ -117,7 +116,6 @@ export default function TeamForm({ initialFormData, onSubmit }: TeamFormProps) {
         errors={errors}
         control={control}
         roleName="crew1"
-        required
       />
       <h3>クルー２（オプション）</h3>
       <Checkbox
@@ -132,7 +130,6 @@ export default function TeamForm({ initialFormData, onSubmit }: TeamFormProps) {
           errors={errors}
           control={control}
           roleName="crew2"
-          required
         />
       )}
       <Button variant="contained" type="submit">
