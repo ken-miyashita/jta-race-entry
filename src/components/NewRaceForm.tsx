@@ -10,9 +10,13 @@ import DatePicker from "./DatePicker";
 import type { NewRaceFormData } from "../lib/types";
 import { validateEmail } from "../lib/validate";
 import { sanitizeRaceFormData } from "../lib/sanitize";
+import { useAdmin } from "../lib/useAdmin";
 
 export default function NewRaceForm() {
   const router = useRouter();
+  const [isAdmin, setIsAdmin] = React.useState<boolean | undefined>(undefined);
+  useAdmin(setIsAdmin);
+
   const {
     register,
     control,
@@ -34,6 +38,12 @@ export default function NewRaceForm() {
     }
   };
 
+  if (isAdmin === undefined) {
+    return <p></p>;
+  } else if (!isAdmin) {
+    return <p>このページは管理者のみが閲覧できます。</p>;
+  }
+
   return (
     <Stack
       component="form"
@@ -42,6 +52,7 @@ export default function NewRaceForm() {
       spacing={2}
       sx={{ m: 2, width: "25ch" }}
     >
+      <h1>新規レース作成</h1>
       <TextField
         register={register}
         errors={errors}

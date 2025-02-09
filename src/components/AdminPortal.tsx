@@ -15,7 +15,7 @@ export default function AdminPortalGuarded({
   useAdmin(setIsAdmin);
 
   if (isAdmin === undefined) {
-    return <p>...</p>;
+    return <p></p>;
   } else if (!isAdmin) {
     return (
       <PasswordInput adminPassword={adminPassword} setIsAdmin={setIsAdmin} />

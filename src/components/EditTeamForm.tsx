@@ -15,14 +15,8 @@ import TeamForm from "./TeamForm";
 
 export default function EditTeamForm({ initialFormData }: EditTeamFormProps) {
   const router = useRouter();
-
   const [isAdmin, setIsAdmin] = React.useState<boolean | undefined>(undefined);
   useAdmin(setIsAdmin);
-  if (isAdmin === undefined) {
-    return <p></p>;
-  } else if (!isAdmin) {
-    return <p>このページは管理者のみが閲覧できます。</p>;
-  }
 
   const onSubmit: SubmitHandler<TeamFormData> = async (formData) => {
     try {
@@ -38,6 +32,11 @@ export default function EditTeamForm({ initialFormData }: EditTeamFormProps) {
     router.push(`/race/${initialFormData.raceId}`);
   };
 
+  if (isAdmin === undefined) {
+    return <p></p>;
+  } else if (!isAdmin) {
+    return <p>このページは管理者のみが閲覧できます。</p>;
+  }
   return (
     <div>
       <h2>エントリー編集</h2>
