@@ -18,12 +18,20 @@ export default function TextField({
   registerOptions = {},
   label,
 }: TextFieldProps) {
+  // ネストされたオブジェクトのエラーを取得するための処理
+  // 例えば registerName が 'skipper.lastName' の場合、errors は { skipper: { lastName: { message: '必須項目です' } } } となる
+  // この場合、error は { message: '必須項目です' } となる
+  const registerNameArray = registerName.split(".");
+  const error = registerNameArray.reduce((acc: any, curr: any) => {
+    return acc?.[curr];
+  }, errors);
+
   return (
     <MuiTextField
       {...register(registerName, registerOptions)}
       label={label}
-      error={!!errors[registerName]}
-      helperText={errors[registerName]?.message}
+      error={!!error}
+      helperText={error?.["message"]}
     />
   );
 }
