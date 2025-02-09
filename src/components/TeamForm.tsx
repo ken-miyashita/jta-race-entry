@@ -3,12 +3,13 @@
 import { useForm } from "react-hook-form";
 
 import * as React from "react";
-import { Button, Stack, FormControlLabel, Checkbox } from "@mui/material";
+import { Button, Stack } from "@mui/material";
 import dayjs from "dayjs";
 
 import PersonForm from "./PersonForm";
 import TextField from "./TextField";
 import Select from "./Select";
+import Checkbox from "./Checkbox";
 import { countries } from "../lib/country";
 
 import { validatePositiveNumber, validateSailNumber } from "../lib/validate";
@@ -119,11 +120,11 @@ export default function TeamForm({ initialFormData, onSubmit }: TeamFormProps) {
         required
       />
       <h3>クルー２（オプション）</h3>
-      <FormControlLabel
-        control={
-          <Checkbox checked={isCrew2Valid} {...register("isCrew2Valid")} />
-        }
+      <Checkbox
+        register={register}
+        registerName="isCrew2Valid"
         label="クルー２"
+        value={isCrew2Valid}
       />
       {isCrew2Valid && (
         <PersonForm
