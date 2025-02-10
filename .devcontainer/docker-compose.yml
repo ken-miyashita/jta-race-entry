@@ -1,4 +1,12 @@
 services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ../:/workspace:cached
+    command: sleep infinity
+    network_mode: service:db
   db:
     image: mysql
     restart: always
@@ -7,8 +15,6 @@ services:
       MYSQL_DATABASE: mydatabase
       MYSQL_USER: user
       MYSQL_PASSWORD: password
-    ports:
-      - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
 volumes:
