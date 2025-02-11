@@ -10,7 +10,7 @@
 
 以下のソフトウェアをインストールする。
 
-- node.js (v18.20.6)
+- node.js (v18.20.6 以上)
 - docker (開発時にローカルで MySQL サーバーを立てるため)
 
 以下の環境変数を設定する。
@@ -20,6 +20,7 @@
 - MYSQL_PASSWORD: MySQL に接続する際のパスワード。任意のパスワードを設定する。
 - MYSQL_ROOT_PASSWORD: MySQL のルートパスワード。任意のパスワードを設定する。
 - WEB_ADMIN_PASSWORD: ウェブ管理者のパスワード。任意のパスワードを設定する。
+- DATABASE_URL: MySQL の接続文字列。"mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@127.0.0.1:3306/${MYSQL_DATABASE}" とする。
 
 この git repository を git clone する。
 
