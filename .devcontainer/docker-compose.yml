@@ -18,7 +18,7 @@ services:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
-      - "3306:3306"
+      - "3306:3306" # ローカル環境で開発するときのみ意味がある
     volumes:
       - db_data:/var/lib/mysql
 volumes:
