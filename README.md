@@ -46,7 +46,7 @@ web ブラウザで http://localhost:3000 にアクセスする。
 
 codespaces を起動する。
 
-（画像）
+![create-codespaces](https://github.com/user-attachments/assets/db0b74b9-2897-4a0e-a35e-6b2bb1b8906c)
 
 codespaces のターミナルで以下のコマンドを実行し、データベースを作成する。
 
@@ -64,12 +64,12 @@ $ yarn dev
 
 Web ブラウザで http://localhost:3000 にアクセスするように促されるので、ボタンを押してアクセスする。
 
-（ボタンの画像）
+![open-browser](https://github.com/user-attachments/assets/e56ae603-7361-4b60-9d6c-ef3a34b95da1)
 
 ウェブ管理者のパスワードを入力する画面が表示されるので、先ほど設定したウェブ管理者のパスワードを入力する。
 
-（パスワード入力画面の画像）
+![admin-password](https://github.com/user-attachments/assets/ea5031be-3a62-45d5-be30-36ba3ffa3a74)
 
 ウェブ管理者のパスワードを入力すると、ウェブ管理者のダッシュボードが表示される。
 
-（ウェブ管理者のダッシュボードの画像）
+![admin-portal](https://github.com/user-attachments/assets/a9112af3-43c8-471a-ac56-ced152095c02)
