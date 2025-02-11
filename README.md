@@ -8,27 +8,51 @@
 
 ### 準備
 
-- node.js
+以下のソフトウェアをインストールする。
+
+- node.js (v18.20.6)
 - docker (開発時にローカルで MySQL サーバーを立てるため)
 
-### 起動方法
+以下の環境変数を設定する。
 
-ターミナル上で以下の準備をする。
+- MYSQL_DATABASE: MySQL のデータベース名。'mydatabase' とする。
+- MYSQL_USER: MySQL に接続するユーザー名。'user' とする。
+- MYSQL_PASSWORD: MySQL に接続する際のパスワード。任意のパスワードを設定する。
+- MYSQL_ROOT_PASSWORD: MySQL のルートパスワード。任意のパスワードを設定する。
+- WEB_ADMIN_PASSWORD: ウェブ管理者のパスワード。任意のパスワードを設定する。
+
+この git repository を git clone する。
 
 ```bash
-# MySQL サーバーを 3306 ポートで立ち上げる
+$ git clone https://github.com/ken-miyashita/jta-race-entry.git
+```
+
+ターミナル上で MySQL サーバーを起動する。このサーバーはずっと起動したままにしておく。
+
+```bash
 $ cd .devcontainer
 $ docker-compose up
-$ cd ..
+```
 
+もう１つターミナルを開いて、以下のコマンドを実行する。
+
+```bash
 # 依存するパッケージをインストール
 $ yarn
 
-# next.js サーバーを起動
+# データベースを作成
+$ DATABASE_URL="mysql://root:${MYSQL_ROOT_PASSWORD}@127.0.0.1:3306/${MYSQL_DATABASE}" npx prisma migrate dev --name init
+```
+
+### 起動方法
+
+以下のコマンドを実行する。
+
+```bash
 $ yarn dev
 ```
 
-web ブラウザで http://localhost:3000 にアクセスする。
+web ブラウザで http://localhost:3000 にアクセスする。これ以降の流れは、以下の github codespaces での開発の流れと同じである。
 
 ## github codespaces での開発
 
