@@ -14,7 +14,7 @@
         |     |-- new_race/                    #   レースの登録
         |     |-- race/[raceId]/
         |                   |-- list_teams/    #   特定レースに参加するチーム一覧
-        |                   |-- new_team/      #   特れレースへのチームの登録
+        |                   |-- new_team/      #   特定レースへのチームの登録
         |
         |-- components/                        # クライアントの処理
         |     |-- NewRaceForm.tsx              #    レース登録フォーム
