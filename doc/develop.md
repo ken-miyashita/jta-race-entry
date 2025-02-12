@@ -69,6 +69,12 @@ codespaces を起動する。
 
 ![create-codespaces](https://github.com/user-attachments/assets/db0b74b9-2897-4a0e-a35e-6b2bb1b8906c)
 
+codespaces のターミナルで以下のコマンドを実行し、依存するパッケージをインストールする。
+
+```bash
+$ yarn
+```
+
 codespaces のターミナルで以下のコマンドを実行し、データベースを作成する。
 
 ```bash
